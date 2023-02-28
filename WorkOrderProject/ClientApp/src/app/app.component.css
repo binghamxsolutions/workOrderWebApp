@@ -1,0 +1,50 @@
+header,  footer, #socials, article {display: grid;}
+header, footer {
+  background-color: #21304a;
+  color: #aaa;
+  grid-auto-flow: column;
+  align-items: center;
+}
+
+header {position: sticky;top: 0px; z-index: 10;}
+
+  header img {
+    height: 50px;
+    width: auto;
+  }
+
+nav {
+  display: grid;
+  grid-auto-flow: column;
+  column-gap: 30px;
+  justify-content: right;
+  padding: 0px 20px;
+}
+
+  nav a {text-align: left;}
+
+a, #mailing {
+  color: #ddd;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+  a:hover {
+    color: #ffd800;
+    text-decoration: underline;
+  }
+article {width: 100vw;}
+#directions {text-decoration: 2px underline;}
+#footer-logo{
+  height: 200px;
+  width: auto;
+}
+#socials {
+    grid-auto-flow: column;
+    justify-content:space-around;
+}
+  .social-icon {
+      height: 25px;
+      width: auto;
+  }
+  .social-icon:hover {filter: invert(50%);}

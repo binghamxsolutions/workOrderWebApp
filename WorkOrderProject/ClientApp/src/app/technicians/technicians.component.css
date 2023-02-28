@@ -1,0 +1,54 @@
+h1, .tech-name {
+  text-align: center;
+}
+
+#technicians, .tech-card, .tech-name, #errorMsg {
+  display: grid;
+}
+
+#errorMsg { /* creates a wide area message with a dark background and centered large text*/
+  background-color: #555;
+  height: 350px;
+  width: 100vw;
+  font: bold 36pt /1.15em "Times New Roman", serif;
+  text-align: center;
+  color: #eee;
+  align-content: center;
+}
+
+a {
+  text-decoration: none;
+}
+
+#technicians {
+  margin: 15px 20px;
+  grid-template-columns: repeat(3, 350px);
+  justify-content: space-evenly;
+  row-gap: 30px;
+}
+
+.tech-card { /* creates the contact card look */
+  grid-template-columns: 30% 70%;
+  width: 350px;
+  align-content: center;
+  border-radius: 25px;
+  filter: drop-shadow(1px 1px 3px #000);
+  text-decoration: none;
+  color: black;
+}
+
+.tech-name {
+  align-content: center;
+  font-weight: bold;
+  background-color: #ccc;
+  word-wrap: break-word;
+}
+
+.tech-info {
+  background-color: #aaa;
+}
+
+  .tech-info a {
+    color: blue;
+    text-decoration: underline;
+  }
