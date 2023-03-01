@@ -1,4 +1,20 @@
-/* You can add global styles to this file, and also import other style files */
+@charset 'utf8';
+:root {
+  /*primary colors*/
+  --lakeBlue: #21304a;
+  --skyBlue: #81C8E2;
+  --stoneBlue: #5D91A4;
+  --spruceBlue: #375763;
+
+  /*secondary colors*/
+  --powderBlue: #D2DFE4;
+  --peacockBlue: #19272C;
+
+  /*accents*/
+  --paleBlue: #DFE3E4;
+  --midnight: #0C1315;
+}
+/*set global color styles*/
 
 /* Provide sufficient contrast against white background */
 a {
@@ -17,14 +33,12 @@ code {
 /* DELTE ME AFTER PROJECT IS BUILT*/
 html, body, app-root {
   min-height: 100vh;
-}
+} /* fills the entire viewport even if the content is insufficient to fill it */
 
-body {
-  margin: 0;
-}
+body {margin: 0; background-color: var(--paleBlue);}
 
 app-root {
   display: grid;
   grid-template-rows: 50px auto 200px;
   justify-content: center;
-}
+} /* sets a default grid for the header content and footer */

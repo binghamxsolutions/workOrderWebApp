@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 import { TechnicianService } from '../technician.service';
 import { Technician } from '../technician';
 
@@ -8,16 +10,35 @@ import { Technician } from '../technician';
   templateUrl: './technicians.component.html',
   styleUrls: ['./technicians.component.css']
 })
-export class TechniciansComponent {
-  technicians: Technician[] = [];
+export class TechniciansComponent implements OnInit {
+  id: number = 0;
+  technicians?: Technician[];
 
-  constructor(private technicianService: TechnicianService) { }
+  constructor(private route: ActivatedRoute, private technicianService: TechnicianService, private location: Location) { }
 
-  getTechnicians(): void {
-    this.technicianService.getTechnicians().subscribe(technicians => this.technicians = technicians);
+  /**
+   * Calls the getTechnicians function after the page loads
+   * to ensure the call doesn't return empty due the the page load order
+  */
+  ngOnInit(): void {
+    this.getTechnicians();
   }
 
-  ngOnInit(): void {
-    this.getTechnicians;
+  /**
+   * Generates a list from the technicians table if there are records
+   * present.
+   */
+  getTechnicians(): void {
+    this.technicianService.getTechnicians().subscribe(technicians => {
+      if (technicians.length > 0) {
+        this.technicians = technicians;
+      }
+      console.log(technicians);
+    });
+  }
+
+  techDetail(id: number) {
+    this.id = 0;
+    this.location.go('/tech/$id');
   }
 }

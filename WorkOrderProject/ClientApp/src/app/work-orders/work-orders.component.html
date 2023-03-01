@@ -1,1 +1,81 @@
-<p>work-orders works!</p>
+<section>
+  <div id="work-orders">
+    <h1>Work Orders</h1>
+
+    <!-- action row for user input -->
+    <div id="actions">
+      <div id="user-action">
+        <button class="action-buttons" id="filter" type="button">Filter Status</button>
+        <button class="action-buttons" id="add-new" type="button">Add New</button>
+      </div>
+
+      <div id="modal">
+        <!-- try onfocus set [contactName].addAttribute("autofocus") and onblur set [contactName].removeAttribute("autofocus") -->
+        <h1>Create a New Work Order</h1>
+
+        <label for="contactName">Name: </label>
+        <input type="text" name="contactName" id="contactName" autofocus required>
+
+        <label for="email">Email: </label>
+        <input type="text" name="email" id="email" required>
+
+        <label for="contactNumber">Phone Number: </label>
+        <input type="text" name="contactNumber" id="contactNumber" required>
+
+        <label for="technicians">Technician: </label>
+        <select name="technicians" id="technicians" required>
+          <option value="default" disabled selected>None selected</option>
+          <option *ngFor="let tech in technicians" value="{{tech.id}}">{{tech.name}}</option>
+        </select>
+
+        <label for="problem">Problem: </label>
+        <textarea name="problem" id="problem" rows="7" cols="35" required></textarea>
+
+        <input type="reset" value="Cancel">
+        <button type="submit" (click)=null>Create</button> <!-- verify that the default tech value isn't selected before submission else throw error -->
+      </div>
+
+      <div id="filter-options">
+        <!-- all:assigned:completed -->
+      </div>
+    </div>
+
+    <!-- work order table to store database info -->
+    <div id="orders">
+      <table *ngIf="workOrders">
+        <tr id="table-header">
+          <th>W.O. Number</th>
+          <th>Date Received</th>
+          <th>Contact Name</th>
+          <th>Contact Number</th>
+          <th>Email</th>
+          <th>Date Assigned</th>
+          <th>Technician ID</th>
+          <th>Status</th>
+          <th>Problem</th>
+          <th>Technician Comments</th>
+          <th>Date Complete</th>
+        </tr>
+
+        <!-- iterable record format -->
+        <tr *ngFor="let workOrder in workOrders">
+          <td><button routerLink="/order/{{workOrder.id}}">{{workOrder.id}}</button></td>
+          <td>{{workOrder.dateReceived}}</td>
+          <td>{{workOrder.contactName}}</td>
+          <td>{{workOrder.contactNumber}}</td>
+          <td>{{workOrder.email}}</td>
+          <td>{{workOrder.dateAssigned}}</td>
+          <td><a routerLink="/tech/{{workOrder.techId}}">{{workOrder.techId}}</a></td>
+          <td>{{workOrder.status}}</td>
+          <td>{{workOrder.problem}}</td>
+          <td>{{workOrder.techComments}}</td>
+          <td>{{workOrder.dateComplete}}</td>
+        </tr>
+      </table>
+
+      <div *ngIf="!workOrders" id="errorMsg">
+        <p>There are no work orders available at this time</p>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,18 +1,31 @@
-header,  footer, #socials, article {display: grid;}
+/*GENERAL STYLES*/
+.mobile {display: none;}
+a {
+  color: #ddd;
+  text-decoration: none;
+  font-weight: bold;
+}
+  a:hover {
+    color: #ffd800;
+    text-decoration: underline;
+  }
 header, footer {
-  background-color: #21304a;
-  color: #aaa;
+  background-color: var(--lakeBlue);
+  color: var(--paleBlue);
   grid-auto-flow: column;
   align-items: center;
 }
 
-header {position: sticky;top: 0px; z-index: 10;}
+/* grid styles */
+header, footer, #socials, article {display: grid;}
 
+
+/* header styles */
+header {position: sticky;top: 0px; z-index: 10;}
   header img {
     height: 50px;
     width: auto;
   }
-
 nav {
   display: grid;
   grid-auto-flow: column;
@@ -20,25 +33,23 @@ nav {
   justify-content: right;
   padding: 0px 20px;
 }
-
   nav a {text-align: left;}
 
-a, #mailing {
-  color: #ddd;
-  text-decoration: none;
-  font-weight: bold;
-}
 
-  a:hover {
-    color: #ffd800;
-    text-decoration: underline;
-  }
 article {width: 100vw;}
-#directions {text-decoration: 2px underline;}
+router-outlet {width: 100vw; justify-self: center}
+
+/* footer styles */
+footer {height: fit-content}
+#directions {font-weight: normal; text-decoration: 2px underline;}
 #footer-logo{
   height: 200px;
   width: auto;
 }
+.address-info {
+  text-align: center;
+}
+.address-info th {color: #fff;}
 #socials {
     grid-auto-flow: column;
     justify-content:space-around;
@@ -48,3 +59,65 @@ article {width: 100vw;}
       width: auto;
   }
   .social-icon:hover {filter: invert(50%);}
+
+
+/* MOBILE STYLES */
+@media screen and (max-width: 480px) {
+    .desktop {display: none;}
+    /* header styles */
+    header{box-shadow: 0px 2px 2px var(--paleBlue);}
+
+    /* mobile nav styles */
+    .mobile{display: block;}
+      .mobile.nav {
+          float: right;
+          align-items: center;
+          justify-content: center;
+          grid-auto-flow: row;
+          padding: 0px 10px;
+          column-gap: 0px;
+      }
+      .mobile.menu-button{
+          float: right;
+          border: none;
+          background-color: transparent;
+          color: var(--paleBlue);
+          margin: 0px;
+      }
+      .mobile.menu-list{
+          display: none;
+          width: fit-content;
+          background-color: var(--peacockBlue);
+          right: 0px;
+          z-index: 5;
+          position: absolute;
+          row-gap: 10px;
+          padding: 10px;
+      }
+        .mobile.menu-list a {font-size: 24px;}
+        .mobile.menu-list a:hover {background-color: var(--spruceBlue); color: #fff;}
+
+    /* mobile footer styles */
+    footer {
+        grid-auto-flow: row;
+        justify-items: center;
+        row-gap: 25px;
+        padding: 20px 0px;
+    }
+      #footer-logo {height: 150px}
+      footer table {text-align: center;}
+      #socials {column-gap: 15px;}
+}
+
+/* TABLET STYLES */
+@media screen and (min-width: 481px) and (max-width: 768px) {
+    /* header styles */
+    header {
+      box-shadow: 0px 2px 2px var(--paleBlue);
+    }
+
+    footer {grid-template: auto auto / auto auto; row-gap: 25px;justify-items: center; padding: 15px; align-content: center;}
+      #socials {order: 3; column-gap: 15px;}
+      .mailing {order: 4;}
+      .physical {order: 2;}
+}

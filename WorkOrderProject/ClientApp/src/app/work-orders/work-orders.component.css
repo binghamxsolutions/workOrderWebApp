@@ -1,0 +1,64 @@
+@import '../commonTemplate.css';
+@charset 'utf8';
+/*GENERAL STYLES*/
+h1, th, td {text-align: center;}
+
+/**Grid Styles*/
+#work-orders, #actions {display: grid;}
+#work-orders {row-gap: 35px; margin: 35px 0px;}
+
+/* button styles */
+#user-action {margin: 0px 15px;}
+.action-buttons {
+  border: none;
+  border-radius: 10px;
+  filter: drop-shadow(1px 1px 2px var(--midnight));
+  background-color: var(--powderBlue);
+  color: var(--peacockBlue);
+  font: normal 36px / 1.1em Lucida, san-serif;
+  text-align: center;
+  padding: 15px;
+}
+#add-new {float: right;}
+
+
+/* modal style*/
+#modal {
+  width: 70vw;
+  background-color: aliceblue;
+  backdrop-filter: drop-shadow(0px 0px 10px #000);
+  position: absolute;
+  display: none;
+}
+
+/* work order table styles */
+#orders {
+  overflow: auto;
+  height: 250px;
+} /* styles the container holding the work order table */
+table {
+  border: 1px solid #000;
+  border-collapse: collapse;
+}
+#table-header {
+  font: normal 18pt / 1.15em "Baskerville Old Face", serif;
+  position: sticky;
+  top: 0px;
+  box-shadow: 0px 1px 2px var(--lakeBlue);
+}
+th, td {border: 1px solid #000;}
+th {background-color: var(--stoneBlue);}
+td {background-color: var(--paleBlue);}
+  td a {color: blue;}
+
+
+/* MOBILE STYLES*/
+@media screen and (max-width: 480px) {
+    .action-buttons {font-size: 16px;}
+}
+
+/* TABLET STYLES*/
+@media screen and (min-width: 481px) and (max-width: 780px) {
+    .action-buttons {font-size: 20px;}
+    #work-orders {row-gap: 50px;}
+}

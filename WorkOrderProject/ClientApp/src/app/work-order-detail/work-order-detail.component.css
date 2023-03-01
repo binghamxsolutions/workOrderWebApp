@@ -1,0 +1,11 @@
+@import '../commonTemplate.css';
+@charset 'utf8';
+
+/* GENERAL STYLES */
+
+/* grid styles */
+#workOrder {display: grid;}
+
+#workOrder {row-gap: 25px; width: 70%;}
+h2 {font-weight: bold;}
+h3 {font-style: italic;}

@@ -1,28 +1,29 @@
-<h1>Alfonso K. Rodriguez-Santiago</h1>
+<section *ngIf="technician">
+  <a id="nav-back" href="" (click)="goBack()">Go Back</a>
+  <h1>{{technician.name}}</h1>
 
-<a id="nav-back" href="techs">Go Back</a>
+  <div id="tech">
 
-<div id="tech">
-  <div class="tech-info" id="personal-details">
-    <h2>Tech Info</h2>
-    <ul id="info-list">
-      <li><span class="identifier">ID No.: </span>1</li>
-      <li><span class="identifier">Email: </span><a href="">some.guy@email.com</a></li>
-    </ul>
+    <div class="tech-info" id="personal-details">
+      <h2>Tech Info</h2>
+      <ul>
+        <li><span class="identifier">ID No.: </span>{{technician.id}}</li>
+        <li><span class="identifier">Email: </span><a href={{technician.email}}>{{technician.email}}</a></li>
+      </ul>
+    </div>
+
+    <div class="tech-info" id="work-orders">
+      <h2>Work Orders</h2>
+      <div *ngIf="!workOrders">
+        <table>
+          <tr class="work-order-card header"><th>W.O. #</th><th>Status</th></tr>
+          <tr *ngFor="let workOrder in workOrders" class="work-order-card"><td class="work-order-id"><a href="/order/{{workOrder.woNum}}">{{workOrder.woNum}}</a></td><td class="work-order-status">{{workOrder.status}}</td></tr>
+        </table>
+      </div>
+
+
+      <p *ngIf="!workOrders">{{technician.name}} has not been assigned to any work orders yet!</p>
+    </div>
   </div>
+</section>
 
-  <div class="tech-info" id="work-orders">
-    <h2>Work Orders</h2>
-
-    <table>
-      <tr class="work-order-card header"><th>W.O. #</th><th>Status</th></tr>
-      <tr class="work-order-card"><td class="work-order-id"><a href="">21</a></td><td class="work-order-status">Open</td></tr>
-      <tr class="work-order-card"><td class="work-order-id"><a href="">22</a></td><td class="work-order-status">Open</td></tr>
-      <tr class="work-order-card"><td class="work-order-id"><a href="">23</a></td><td class="work-order-status">Closed</td></tr>
-      <tr class="work-order-card"><td class="work-order-id"><a href="">24</a></td><td class="work-order-status">Open</td></tr>
-      <tr class="work-order-card"><td class="work-order-id"><a href="">25</a></td><td class="work-order-status">Open</td></tr>
-    </table>
-
-    <p id="empty-order-list">Alfonso K. Rodriguez-Santiago has not been assigned to any work orders yet!</p>
-  </div>
-</div>

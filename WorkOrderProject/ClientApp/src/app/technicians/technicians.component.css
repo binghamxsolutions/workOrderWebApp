@@ -1,33 +1,22 @@
-h1, .tech-name {
-  text-align: center;
+@import '../commonTemplate.css';
+@charset 'utf8';
+/* GENERAL STYLES */
+h1, .tech-name {text-align: center;}
+a {text-decoration: none;}
+
+/* grid styles */
+#technicians, #tech-list, .tech-card, .tech-name {display: grid;}
+
+#technicians {row-gap: 35px; margin: 15px 0px; width: 70%;}
+#tech-list {
+    grid-template-columns: repeat(auto-fit, 350px);
+    row-gap: 30px;
+    column-gap: 15px;
+    justify-content: center;
 }
 
-#technicians, .tech-card, .tech-name, #errorMsg {
-  display: grid;
-}
-
-#errorMsg { /* creates a wide area message with a dark background and centered large text*/
-  background-color: #555;
-  height: 350px;
-  width: 100vw;
-  font: bold 36pt /1.15em "Times New Roman", serif;
-  text-align: center;
-  color: #eee;
-  align-content: center;
-}
-
-a {
-  text-decoration: none;
-}
-
-#technicians {
-  margin: 15px 20px;
-  grid-template-columns: repeat(3, 350px);
-  justify-content: space-evenly;
-  row-gap: 30px;
-}
-
-.tech-card { /* creates the contact card look */
+/* tech contact card styles */
+.tech-card {
   grid-template-columns: 30% 70%;
   width: 350px;
   align-content: center;
@@ -35,20 +24,42 @@ a {
   filter: drop-shadow(1px 1px 3px #000);
   text-decoration: none;
   color: black;
-}
-
+} /* creates the contact card look */
 .tech-name {
   align-content: center;
   font-weight: bold;
   background-color: #ccc;
   word-wrap: break-word;
+  border-radius: 10px 0px 0px 10px;
 }
-
+.tech-name p {margin: 0px;}
 .tech-info {
   background-color: #aaa;
+  border-radius: 0px 10px 10px 0px;
 }
-
   .tech-info a {
     color: blue;
     text-decoration: underline;
   }
+
+/* MOBILE STYLES */
+@media screen and (max-width: 480px) {
+    #technicians {width: max-content;}
+   /* tech contact card styles */
+  .tech-card {
+      grid-template-columns: max-content;
+      grid-auto-flow: row;
+      width: 50%;
+  }
+  .tech-name { border-radius: 10px 10px 0px 0px;}
+    .tech-name p {padding: 5px 0px;}
+  .tech-info {border-radius: 0px 0px 10px 10px;}
+    .tech-info td {text-align: center;}
+    #tech-list {grid-template-columns: 100%;}
+}
+
+
+/* TABLET STYLES */
+@media screen and (min-width: 481px) and (max-width: 768px) {
+    #technicians {margin: 35px 0px;}
+}

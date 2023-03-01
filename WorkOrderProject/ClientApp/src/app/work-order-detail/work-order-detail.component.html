@@ -1,35 +1,40 @@
-<h1>Work Order #1</h1>
+<section *ngIf="workOrder">
+  <a id="nav-back" href="" (click)="goBack()">Go Back</a>
+  <h1>Work Order {{workOrder.woId}}</h1>
 
-<a href="orders">Go Back</a>
+  <div id="workOrder">
+    <div class="wo-details" id="overview">
+      <h2>Overview</h2>
 
-<div class="wo-details" id="overview">
-  <h2>Overview</h2>
+      <ul>
+        <li>Date Received: {{workOrder.dateReceived}}</li>
+        <li>Date Assigned: {{workOrder.dateAssigned}}</li>
+        <li>Status: {{workOrder.status}}</li>
+        <li>Tech ID: {{workOrder.techId}}</li> <!-- make this a hoverable item with a tooltip about the tech -->
+      </ul>
 
-  <ul>
-    <li>Date Received: Jan 12, 2020</li>
-    <li>Date Assigned: June 3, 2020</li>
-    <li>Status: Open</li>
-    <li>Tech ID: 11</li> <!-- make this a hoverable item with a tooltip about the tech -->
-  </ul>
-</div>
+      <div tech><!-- create tech info tooltip --></div>
+    </div>
 
-<div class="wo-details" id="contact-info">
-  <h2>Contact Info</h2>
+    <div class="wo-details" id="contact-info">
+      <h2>Contact Info</h2>
 
-  <ul>
-    <li>Name: Jane Doe</li>
-    <li>Phone Number: 888-888-8888</li>
-    <li>Email: customer@email.com	</li>
-  </ul>
-</div>
+      <ul>
+        <li>Name: {{workOrder.contactName}}</li>
+        <li>Phone Number: {{workOrder.contactNumber}}</li>
+        <li>Email: {{workOrder.email}}</li>
+      </ul>
+    </div>
 
-<div class="wo-details" id="more-info">
-  <h2>More Info</h2>
-  <h3>Problem</h3>
-  <p>Skype</p>
+    <div class="wo-details" id="more-info">
+      <h2>More Info</h2>
+      <h3>Problem</h3>
+      <p>{{workOrder.problem}}</p>
 
-  <h3>Technician Comments</h3>
-  <p>It broke</p>
+      <h3>Technician Comments</h3>
+      <p>{{workOrder.techComments}}</p>
 
-  <p>This work order was closed on: August 23, 2020<p>
-</div>
+      <p *ngIf="workOrder.status=='completed'">This work order was closed on: {{workOrder.dateComplete}}<p>
+    </div>
+  </div>
+</section>
