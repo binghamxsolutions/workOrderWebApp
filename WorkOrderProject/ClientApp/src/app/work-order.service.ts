@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
@@ -8,12 +8,12 @@ import { WorkOrder } from './work-order';
   providedIn: 'root'
 })
 export class WorkOrderService {
-  private workOrdersUrl = 'api/workOrders';
   httpOptions = {
     header: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
+  base?: string;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl: string) { this.base = baseUrl; }
 
 
   /**
@@ -21,7 +21,7 @@ export class WorkOrderService {
    * @returns An `Obseverable` array of type `WorkOrder`
    */
   getWorkOrders(): Observable<WorkOrder[]> {
-    return this.http.get<WorkOrder[]>(this.workOrdersUrl).pipe(
+    return this.http.get<WorkOrder[]>(this.base + "getworkorders").pipe(
       catchError(this.handleError<WorkOrder[]>('getWorkOrders', []))
     );
   }
@@ -33,7 +33,7 @@ export class WorkOrderService {
    * @returns An `Obseverable` array of type `WorkOrder`
    */
   getFilteredWorkOrders(techId: number): Observable<WorkOrder[]> {
-    return this.http.get<WorkOrder[]>(this.workOrdersUrl).pipe(
+    return this.http.get<WorkOrder[]>("getworkorder").pipe(
       catchError(this.handleError<WorkOrder[]>('getFilteredWorkOrders', []))
     );
   }

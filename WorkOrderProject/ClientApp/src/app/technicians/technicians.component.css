@@ -25,6 +25,7 @@ a {text-decoration: none;}
   text-decoration: none;
   color: black;
 } /* creates the contact card look */
+.tech-card:hover {cursor: pointer;}
 .tech-name {
   align-content: center;
   font-weight: bold;

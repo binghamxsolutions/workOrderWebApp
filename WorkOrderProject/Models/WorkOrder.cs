@@ -9,7 +9,7 @@ namespace WorkOrderProject.Models
     /// </summary>
     public class WorkOrder
     {
-        public int woId { set; get; }
+        public int woNum { set; get; }
         public string? contactName { set; get; }
         public string? contactNumber { set; get; }
         public string? email { set; get; }

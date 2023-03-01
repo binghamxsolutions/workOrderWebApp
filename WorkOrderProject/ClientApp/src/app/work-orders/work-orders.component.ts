@@ -28,7 +28,7 @@ export class WorkOrdersComponent implements OnInit {
       if (workOrders.length > 0) {
         this.workOrders = workOrders;
       }
-    });
+   });
   }
 
   /**

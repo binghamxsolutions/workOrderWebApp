@@ -1,19 +1,20 @@
-<section>
+<!-- ERROR THROWN: web app throwing error on lines 10 and 22 where angular code exists. Unresolved. -->
+<section class="parent-container">
   <div id="technicians">
     <h1>Meet Our Techs</h1>
-
-    <div id="tech-list" *ngIf="technicians">
+    
+    <div id="tech-list">
       <!-- iterable tech card template -->
-      <div *ngFor="let tech in technicians">
-        <div>
-          <div class="tech-card" (click)='id=tech.id; techDetail(id)'>
+      <div *ngIf="technicians">
+        <div *ngFor="let tech in technicians">
+          <section class="tech-card" (click)="techDetail({{tech.id}})">
             <div class="tech-name"><p>{{tech.name}}</p></div>
 
             <table class="tech-info">
-              <tr><th>ID No.</th><td>{{tech.id}}</td></tr>
-              <tr><th>Email: </th><td><a href='mailto:$tech.email'>{{tech.email}}</a></td></tr>
+              <tr><th>ID No.</th><td>$tech.id</td></tr>
+              <tr><th>Email: </th><td><a href='{{tech.email}}'>$tech.email</a></td></tr>
             </table>
-          </div>
+          </section>
         </div>
       </div>
     </div>

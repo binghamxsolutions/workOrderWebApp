@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
@@ -8,23 +8,22 @@ import { Technician } from './technician';
   providedIn: 'root'
 })
 export class TechnicianService {
-  private techniciansUrl = 'technicians';
-
+  base?: string;
   httpOptions = {
     header: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl: string) { this.base = baseUrl; }
 
   getTechnicians(): Observable<Technician[]> {
-    return this.http.get<Technician[]>(this.techniciansUrl).pipe(
+    return this.http.get<Technician[]>(this.base + "gettechnicians").pipe(
       catchError(this.handleError<Technician[]>('getTechnicians', []))
     );
   }
 
   getTechnician(id: number): Observable<Technician> {
     const url = '${this.techniciansUrl}/${id}';
-    return this.http.get<Technician>(url).pipe(
+    return this.http.get<Technician>(this.base + 'gettechnician?id=$id').pipe(
       catchError(this.handleError<Technician>('getTechnician techId = ${id}'))
     );
   }

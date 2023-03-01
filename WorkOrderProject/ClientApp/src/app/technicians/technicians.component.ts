@@ -11,7 +11,6 @@ import { Technician } from '../technician';
   styleUrls: ['./technicians.component.css']
 })
 export class TechniciansComponent implements OnInit {
-  id: number = 0;
   technicians?: Technician[];
 
   constructor(private route: ActivatedRoute, private technicianService: TechnicianService, private location: Location) { }
@@ -33,12 +32,15 @@ export class TechniciansComponent implements OnInit {
       if (technicians.length > 0) {
         this.technicians = technicians;
       }
-      console.log(technicians);
     });
   }
 
+
+  /**
+   * Re-routes the user to a technician detail page
+   * @param id The technician's id number
+   */
   techDetail(id: number) {
-    this.id = 0;
     this.location.go('/tech/$id');
   }
 }
