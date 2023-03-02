@@ -1,0 +1,42 @@
+@import '../commonTemplate.css';
+@charset 'utf-8';
+
+#user-nav{ display: grid; width: 70%;}
+#user-nav {
+  grid-auto-flow: column;
+  justify-self: center;
+}
+#nav-home, #nav-back {
+}
+#nav-home {
+  border-radius: 10px;
+  background-color: #21304a;
+  color: #ccc;
+  padding: 15px;
+  margin: 20px;
+  filter: drop-shadow(1px 1px 2px #000);
+  font: normal 36px / 1.1em Lucida, san-serif;
+  text-align: center;
+  text-decoration: none;
+  justify-self: right;
+}
+
+/* MOBILE STYLES */
+@media screen and (max-width: 480px) {
+  #page-not-found {
+
+  }
+  #nav-home, #nav-back {
+    font-size: 12pt;
+    width: 100%;
+    border-radius: 0px;
+    margin: 0px;
+  }
+  #user-nav{column-gap: 15px;}
+}
+@media screen and (max-width: 480px) , screen and (min-width: 481px) and (max-width: 768px) {
+    #nav-home, #nav-back {
+      align-items: center;
+      display: grid;
+    }
+}

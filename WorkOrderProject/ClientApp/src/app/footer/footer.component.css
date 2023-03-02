@@ -1,0 +1,72 @@
+@import '../commonTemplate.css';
+/* GENERAL STYLES */
+footer {
+  height: fit-content;
+}
+
+#directions {
+  font-weight: normal;
+  text-decoration: 2px underline;
+}
+
+#footer-logo {
+  height: 200px;
+  width: auto;
+}
+
+.address-info {
+  text-align: center;
+}
+
+  .address-info th {
+    color: #fff;
+  }
+
+#socials {
+  grid-auto-flow: column;
+  justify-content: space-around;
+}
+
+.social-icon {
+  height: 25px;
+  width: auto;
+}
+
+  .social-icon:hover {
+    filter: invert(50%);
+  }
+
+/* MOBILE STYLES */
+@media screen and (max-width: 480px) {
+  footer {
+    grid-auto-flow: row;
+    justify-content: center;
+    row-gap: 35px;
+    padding: 35px 0px;
+  }
+}
+
+
+  /* TABLET STYLES */
+  @media screen and (min-width: 481px) and (max-width: 768px) {
+    footer {
+      grid-template: auto auto / auto auto;
+      row-gap: 25px;
+      justify-items: center;
+      padding: 15px;
+      align-content: center;
+    }
+
+    #socials {
+      order: 3;
+      column-gap: 15px;
+    }
+
+    .mailing {
+      order: 4;
+    }
+
+    .physical {
+      order: 2;
+    }
+  }

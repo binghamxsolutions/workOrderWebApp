@@ -1,0 +1,22 @@
+@import '../commonTemplate.css';
+#welcome {
+  display: grid;
+  justify-content: center;
+  row-gap: 35px;
+}
+#navigate {
+    display: grid;
+    justify-items: center;
+    grid-auto-flow: column;
+    column-gap: 35px;
+}
+  .link {
+      color: var(--midnight);
+      background-color: var(--stoneBlue);
+      border-radius: 10px;
+      border: none;
+      padding: 15px;
+  }
+  .link:hover {background-color: var(--peacockBlue);
+               color: var(--paleBlue);
+  }

@@ -1,52 +1,8 @@
-<!--
-<app-nav-menu></app-nav-menu>
-<div class="container">
-  <router-outlet></router-outlet>
-</div>
-  == REMOVE AFTER PROJECT IS COMPLETED ==
--->
-<header>
-  <a href="https://www.lakecountyfl.gov"><img src="https://lakeumbraco.azurewebsites.net/media/jhaatt1n/nav-logo.svg" alt="Lake County, Florida logo"></a>
-  <nav class="desktop nav">
-    <a routerLink="orders">Work Orders</a>
-    <a routerLink="techs">Technicians</a>
-  </nav>
-
-  <nav class="mobile nav">
-
-    <button type="button" class="mobile menu-button" onclick="showSubMenu()">MENU</button>
-    <div class="mobile menu-list" id="menu">
-      <a routerLink="orders">Work Orders</a>
-      <a routerLink="techs">Technicians</a>
-    </div>
-  </nav>
-</header>
+<app-header></app-header>
 
 <article>
   <router-outlet></router-outlet>
 </article>
 <!-- encases the templates in its own element for easier formatting -->
 
-<footer>
-  <a href="https://www.lakecountyfl.gov"><img id="footer-logo" src="https://lakeumbraco.azurewebsites.net/media/ddmdsj3y/footer-logo-2.svg" alt="Lake County, Florida logo"></a>
-  <div title="Physical Address" class="address-info physical">
-    <table>
-      <tr><th>Physical Address</th></tr>
-      <tr><td><a id="directions" href="https://www.google.com/maps/dir//315+W+Main+St,+Tavares,+FL+32778/@28.8017948,-81.7322734,17z/data=!4m8!4m7!1m0!1m5!1m1!1s0x88e7bd79854fb08f:0x2395a0a5f103fb34!2m2!1d-81.7300794!2d28.8017901">315 W. Main St. Tavares, FL 32778</a></td></tr>
-    </table>
-  </div>
-
-  <div title="Mailing Address" class="address-info mailing">
-    <table>
-      <tr><th>Mailing Address</th></tr>
-      <tr><td id="mailing">P.O Box 7800 Tavares, FL 32778</td></tr>
-    </table>
-  </div>
-
-  <div id="socials">
-    <a href="https://www.facebook.com/LakeCountyFLBCC/"><img class="social-icon" src="../assets/facebook.png" alt="Facebook logo" /></a>
-    <a href="https://twitter.com/lakegov?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor"><img class="social-icon" src="../assets/twitter.png" alt="Twitter logo" /></a>
-    <a href="https://www.instagram.com/lakecountyflorida/?hl=en"><img class="social-icon" src="../assets/instagram.png" alt="Instagram logo" /></a>
-    <a href="https://www.youtube.com/channel/UCd3YB4jmtmtKA1VkRXw33aQ"><img class="social-icon" src="../assets/youtube.png" alt="YouTube logo" /></a>
-  </div>
-</footer>
+<app-footer></app-footer>

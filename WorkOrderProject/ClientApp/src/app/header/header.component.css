@@ -1,0 +1,84 @@
+@import '../commonTemplate.css';
+/* header styles */
+header {
+  position: sticky;
+  top: 0px;
+  z-index: 10;
+}
+
+  header img {
+    height: 50px;
+    width: auto;
+  }
+
+nav {
+  display: grid;
+  grid-auto-flow: column;
+  column-gap: 30px;
+  justify-content: right;
+  padding: 0px 20px;
+}
+
+  nav a {
+    text-align: left;
+  }
+
+/* MOBILE STYLES */
+@media screen and (max-width: 480px) {
+  .desktop {
+    display: none;
+  }
+  /* header styles */
+  header {
+    box-shadow: 0px 2px 2px var(--paleBlue);
+  }
+
+    /* mobile nav styles */
+    .mobile {
+      display: block;
+    }
+      .mobile.nav {
+        float: right;
+        align-items: center;
+        justify-content: center;
+        grid-auto-flow: row;
+        padding: 0px 10px;
+        column-gap: 0px;
+      }
+
+      .mobile.menu-button {
+        float: right;
+        border: none;
+        background-color: transparent;
+        color: var(--paleBlue);
+        margin: 0px;
+      }
+
+      .mobile.menu-list {
+        display: none;
+        width: fit-content;
+        background-color: var(--peacockBlue);
+        right: 0px;
+        z-index: 5;
+        position: absolute;
+        row-gap: 10px;
+        padding: 10px;
+      }
+
+        .mobile.menu-list a {
+          font-size: 24px;
+        }
+
+          .mobile.menu-list a:hover {
+            background-color: var(--spruceBlue);
+            color: #fff;
+          }
+}
+
+/* TABLET STYLES */
+@media screen and (min-width: 481px) and (max-width: 768px) {
+  /* header styles */
+  header {
+    box-shadow: 0px 2px 2px var(--paleBlue);
+  }
+}

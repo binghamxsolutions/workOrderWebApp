@@ -3,9 +3,8 @@
 /* GLOBAL STYLES */
 
 /* grid styles */
-#tech, .tech-info, .work-order-card,
+.tech-info, .work-order-card,
 #empty-order-list, #info-list {display: grid;}
-#tech {justify-content: center; row-gap: 35px;}
 #info-list {
   justify-content: space-around;
   grid-template-columns: repeat(2, auto);

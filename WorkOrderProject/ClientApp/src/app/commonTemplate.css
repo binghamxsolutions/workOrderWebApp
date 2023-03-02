@@ -1,4 +1,35 @@
 /** GENERAL STYLES */
+.mobile {
+  display: none;
+}
+
+a {
+  color: #ddd;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+  a:hover {
+    color: #ffd800;
+    text-decoration: underline;
+  }
+
+
+/* grid styles */
+header, footer, #socials, article, .parent-container > div {
+  display: grid;
+}
+
+header, footer {
+  background-color: var(--lakeBlue);
+  color: var(--paleBlue);
+  grid-auto-flow: column;
+  align-items: center;
+}
+
+article {
+  width: 100vw;
+}
 
 .parent-container {
   display: grid;
@@ -6,11 +37,17 @@
   justify-items: center;
   margin: 35px 0px;
 } /* creates a style for the view container */
+  .parent-container > div {
+    width: 70%;
+    row-gap: 35px;
+    margin: 15px 0px;
+  }
 
 h1 {
   text-align: center;
   margin: 25px 0px;
 }
+
 #errorMsg {
   display: grid;
   width: 100%;

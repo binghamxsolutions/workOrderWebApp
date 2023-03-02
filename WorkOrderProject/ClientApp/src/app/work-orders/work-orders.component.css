@@ -1,11 +1,9 @@
 @import '../commonTemplate.css';
-@charset 'utf8';
+@charset 'utf-8';
 /*GENERAL STYLES*/
 h1, th, td {text-align: center;}
 
 /**Grid Styles*/
-#work-orders, #actions {display: grid;}
-#work-orders {row-gap: 35px; margin: 35px 0px;}
 
 /* button styles */
 #user-action {margin: 0px 15px;}

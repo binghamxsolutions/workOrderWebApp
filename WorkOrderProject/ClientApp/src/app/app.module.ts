@@ -9,7 +9,10 @@ import { WorkOrdersComponent } from './work-orders/work-orders.component';
 import { WorkOrderDetailComponent } from './work-order-detail/work-order-detail.component';
 import { TechniciansComponent } from './technicians/technicians.component';
 import { TechnicianDetailComponent } from './technician-detail/technician-detail.component';
-import { InvalidRequestComponent } from './invalid-request/invalid-request.component';
+import { WelcomeComponent } from './welcome/welcome.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from './footer/footer.component';
 //list of components needed for site routing purposes
 
 
@@ -20,19 +23,23 @@ import { InvalidRequestComponent } from './invalid-request/invalid-request.compo
     TechniciansComponent,
     TechnicianDetailComponent,
     WorkOrderDetailComponent,
-    InvalidRequestComponent
+    WelcomeComponent,
+    PageNotFoundComponent,
+    HeaderComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot([
-      { path: '', component: WorkOrdersComponent, pathMatch: 'full' },
+      { path: '', component: WelcomeComponent, pathMatch: 'full' },
       { path: 'orders', component: WorkOrdersComponent },
       { path: 'techs', component: TechniciansComponent },
       { path: 'tech/:id', component: TechnicianDetailComponent },
       { path: 'order/:id', component: WorkOrderDetailComponent },
-      { path: '404', component: InvalidRequestComponent },
+      { path: 'welcome', component: WelcomeComponent },
+      { path: '404', component: PageNotFoundComponent },
       { path: '**', redirectTo: '404'}
     ]) //routing paths for their respective components. read as: path: <url-slug>, component: [ComponentName]
   ],

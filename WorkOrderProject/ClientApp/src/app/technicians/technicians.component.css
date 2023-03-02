@@ -5,9 +5,8 @@ h1, .tech-name {text-align: center;}
 a {text-decoration: none;}
 
 /* grid styles */
-#technicians, #tech-list, .tech-card, .tech-name {display: grid;}
+#tech-list, .tech-card, .tech-name {display: grid;}
 
-#technicians {row-gap: 35px; margin: 15px 0px; width: 70%;}
 #tech-list {
     grid-template-columns: repeat(auto-fit, 350px);
     row-gap: 30px;
