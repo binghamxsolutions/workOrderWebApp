@@ -7,7 +7,7 @@
       <!-- iterable tech card template -->
       <div *ngIf="technicians">
         <div *ngFor="let tech in technicians">
-          <section class="tech-card" (click)="techDetail({{tech.id}})">
+          <section class="tech-card" (click)="techDetail(tech.id)">
             <div class="tech-name"><p>{{tech.name}}</p></div>
 
             <table class="tech-info">
