@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { InvalidRequestComponent } from './invalid-request.component';
+import { PageNotFoundComponent } from './page-not-found.component';
 
-describe('InvalidRequestComponent', () => {
-  let component: InvalidRequestComponent;
-  let fixture: ComponentFixture<InvalidRequestComponent>;
+describe('PageNotFoundComponent', () => {
+  let component: PageNotFoundComponent;
+  let fixture: ComponentFixture<PageNotFoundComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ InvalidRequestComponent ]
+      declarations: [PageNotFoundComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(InvalidRequestComponent);
+    fixture = TestBed.createComponent(PageNotFoundComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

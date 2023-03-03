@@ -4,9 +4,14 @@
 h1, th, td {text-align: center;}
 
 /**Grid Styles*/
+#actions, #user-action, .user-interactive, #modal, form, #form-btns, .input-field {display: grid;}
 
 /* button styles */
-#user-action {margin: 0px 15px;}
+#user-action {
+    margin: 0px 15px;
+    justify-content: space-around;
+    grid-auto-flow: column;
+}
 .action-buttons {
   border: none;
   border-radius: 10px;
@@ -17,17 +22,46 @@ h1, th, td {text-align: center;}
   text-align: center;
   padding: 15px;
 }
-#add-new {float: right;}
+  .action-buttons:hover {
+    background-color: var(--spruceBlue);
+    color: var(--powderBlue);
+  }
+  .action-buttons:focus {
+      background-color: var(--peacockBlue);
+      color: var(--powderBlue);
+  }
+  .action-buttons:focus:hover {color: var(--paleBlue); text-decoration: underline;}
+  #add-new {float: right;}
 
 
 /* modal style*/
 #modal {
-  width: 70vw;
+  width: fit-content;
+  height: 100%;
+  overflow: auto;
   background-color: aliceblue;
-  backdrop-filter: drop-shadow(0px 0px 10px #000);
-  position: absolute;
-  display: none;
+  filter: drop-shadow(0px 0px 10px #000);
+  position: fixed;
+  border-radius: 10px;
+  padding: 50px;
+  row-gap: 15px;
+  display: none; 
+  z-index: 25;
+  left: 50%;
+  top: 0%;
+  transform: translateX(-50%);
 }
+/* alignment hack modified from: https://stackoverflow.com/questions/39627549/how-to-center-modal-to-the-center-of-screen*/
+  form {row-gap: 25px;}
+  #form-btns {
+      justify-content: right;
+      column-gap: 25px;
+      grid-auto-flow:column;
+  }
+  .input-field label{ font-weight: bold; }
+  .input-field > * {width: 100%;}
+  #form-btns > * {width: fit-content;}
+    #cancel {background-color: var(--paleBlue);}
 
 /* work order table styles */
 #orders {

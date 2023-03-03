@@ -45,8 +45,8 @@ namespace WorkOrderProject
 
         public WorkOrder[] ReadWorkOrderTable()
         {
-            WorkOrder[] records = new WorkOrder[] { };
-            List<WorkOrder> workOrders = new List<WorkOrder>(); 
+            WorkOrder[] records;
+            List<WorkOrder> workOrders = new(); 
             sqlStatement = "SELECT * FROM workorders";
 
             cmd = new SqlCommand(sqlStatement, conn);
@@ -86,8 +86,8 @@ namespace WorkOrderProject
 
         public WorkOrder[] ReadWorkOrderTable(string filter, string condition, string order)
         {
-            WorkOrder[] records = new WorkOrder[] { };
-            List<WorkOrder> workOrders = new List<WorkOrder>();
+            WorkOrder[] records;
+            List<WorkOrder> workOrders = new ();
             sqlStatement = "SELECT * FROM workorders WHERE " + filter + "=" + condition + " ORDER BY DateReceived " + order;
             cmd = new SqlCommand(sqlStatement, conn);
             dataReader = cmd.ExecuteReader();
@@ -126,7 +126,7 @@ namespace WorkOrderProject
 
         public WorkOrder ReadWorkOrderRecord(string filter, string condition)
         {
-            WorkOrder record = new WorkOrder();
+            WorkOrder record;
             sqlStatement = "SELECT * FROM technicians WHERE " + filter + "=" + condition;
             cmd = new SqlCommand(sqlStatement, conn);
             dataReader = cmd.ExecuteReader();
@@ -170,8 +170,8 @@ namespace WorkOrderProject
 
 
         public Technician[] ReadTechnicianTable() {
-            Technician[] records = new Technician[] { };
-            List<Technician> technicians = new List<Technician>();
+            Technician[] records;
+            List<Technician> technicians = new ();
 
             sqlStatement = "SELECT * FROM technicians";
             cmd = new SqlCommand(sqlStatement, conn);
@@ -204,8 +204,8 @@ namespace WorkOrderProject
         
         public Technician[] ReadTechnicianTable(string filter, string condition)
         {
-            Technician[] records = new Technician[] { };
-            List<Technician> technicians = new List<Technician>();
+            Technician[] records;
+            List<Technician> technicians = new ();
             sqlStatement = " SELECT * FROM technicians WHERE " + filter + "=" + condition;
             cmd = new SqlCommand(sqlStatement, conn);
             dataReader = cmd.ExecuteReader();
@@ -236,7 +236,7 @@ namespace WorkOrderProject
 
         public Technician ReadTechnicianRecord(string filter, string condition)
         {
-            Technician record = new Technician();
+            Technician record;
             sqlStatement = "SELECT * FROM technicians WHERE " + filter + "=" + condition;
             cmd = new SqlCommand(sqlStatement, conn);
             dataReader = cmd.ExecuteReader();

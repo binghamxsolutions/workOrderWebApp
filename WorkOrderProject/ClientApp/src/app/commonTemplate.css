@@ -40,7 +40,6 @@ article {
   .parent-container > div {
     width: 70%;
     row-gap: 35px;
-    margin: 15px 0px;
   }
 
 h1 {
@@ -75,7 +74,6 @@ h1 {
 
 /** MOBILE STYLES */
 @media screen and (max-width: 480px) {
-  .parent-container {margin: 0px;}
   #errorMsg{font-size: 24px; width: fit-content;}
   #nav-back {font-size: 18pt; width: 100%; border-radius: 0px; margin: 0px;}
 }

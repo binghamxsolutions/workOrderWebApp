@@ -44,7 +44,6 @@ a {text-decoration: none;}
 
 /* MOBILE STYLES */
 @media screen and (max-width: 480px) {
-    #technicians {width: max-content;}
    /* tech contact card styles */
   .tech-card {
       grid-template-columns: max-content;
@@ -56,10 +55,4 @@ a {text-decoration: none;}
   .tech-info {border-radius: 0px 0px 10px 10px;}
     .tech-info td {text-align: center;}
     #tech-list {grid-template-columns: 100%;}
-}
-
-
-/* TABLET STYLES */
-@media screen and (min-width: 481px) and (max-width: 768px) {
-    #technicians {margin: 35px 0px;}
 }

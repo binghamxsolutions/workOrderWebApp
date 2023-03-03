@@ -17,6 +17,16 @@
       border: none;
       padding: 15px;
   }
-  .link:hover {background-color: var(--peacockBlue);
-               color: var(--paleBlue);
+  .link:hover {
+      background-color: var(--peacockBlue);
+      color: var(--paleBlue);
+  }
+
+  @media screen and (max-width: 480px) {
+    #navigate {
+      grid-auto-flow: row;
+      column-gap: 0px;
+      row-gap: 15px;
+    }
+    .link {width: 100%; text-align: center;}
   }

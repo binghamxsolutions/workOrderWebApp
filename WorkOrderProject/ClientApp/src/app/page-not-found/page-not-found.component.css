@@ -5,21 +5,20 @@
 #user-nav {
   grid-auto-flow: column;
   justify-self: center;
+  justify-content: center;
 }
-#nav-home, #nav-back {
-}
-#nav-home {
-  border-radius: 10px;
-  background-color: #21304a;
-  color: #ccc;
-  padding: 15px;
-  margin: 20px;
-  filter: drop-shadow(1px 1px 2px #000);
-  font: normal 36px / 1.1em Lucida, san-serif;
-  text-align: center;
-  text-decoration: none;
-  justify-self: right;
-}
+  #nav-home {
+    border-radius: 10px;
+    background-color: #21304a;
+    color: #ccc;
+    padding: 15px;
+    margin: 20px;
+    filter: drop-shadow(1px 1px 2px #000);
+    font: normal 36px / 1.1em Lucida, san-serif;
+    text-align: center;
+    text-decoration: none;
+    justify-self: right;
+  }
 
 /* MOBILE STYLES */
 @media screen and (max-width: 480px) {

@@ -5,38 +5,59 @@
     <!-- action row for user input -->
     <div id="actions">
       <div id="user-action">
-        <button class="action-buttons" id="filter" type="button">Filter Status</button>
-        <button class="action-buttons" id="add-new" type="button">Add New</button>
-      </div>
+        <div class="user-interactive">
+          <select class="action-buttons" id="filter">
+            <option>Open</option>
+            <option>Complete</option>
+          </select>
+          <div id="filter-options">
+            <!-- all:assigned:completed -->
+          </div>
+        </div>
 
-      <div id="modal">
-        <!-- try onfocus set [contactName].addAttribute("autofocus") and onblur set [contactName].removeAttribute("autofocus") -->
-        <h1>Create a New Work Order</h1>
+        <div class="user-interactive">
+          <button class="action-buttons" id="add-new" type="button" onclick="openOrderForm()">Add New</button>
+          <div id="modal">
+            <!-- try onfocus set [contactName].addAttribute("autofocus") and onblur set [contactName].removeAttribute("autofocus") -->
+            <h1>Create a New Work Order</h1>
 
-        <label for="contactName">Name: </label>
-        <input type="text" name="contactName" id="contactName" autofocus required>
+            <form>
+              <div class="input-field text">
+                <label for="contactName">Name: </label>
+                <input type="text" name="contactName" id="contactName" autofocus>
+              </div>
 
-        <label for="email">Email: </label>
-        <input type="text" name="email" id="email" required>
+              <div class="input-field text">
+                <label for="email">Email: </label>
+                <input type="text" name="email" id="email">
+              </div>
 
-        <label for="contactNumber">Phone Number: </label>
-        <input type="text" name="contactNumber" id="contactNumber" required>
+              <div class="input-field text">
+                <label for="contactNumber">Phone Number: </label>
+                <input type="text" name="contactNumber" id="contactNumber">
+              </div>
 
-        <label for="technicians">Technician: </label>
-        <select name="technicians" id="technicians" required>
-          <option value="default" disabled selected>None selected</option>
-          <option *ngFor="let tech in technicians" value="{{tech.id}}">{{tech.name}}</option>
-        </select>
+              <div class="input-field drop-down">
+                <label for="technicians">Technician: </label>
+                <select name="technicians" id="technicians">
+                  <option value="default" disabled selected>None selected</option>
+                  <option *ngFor="let tech in technicians" value="{{tech.id}}">{{tech.name}}</option>
+                </select>
+              </div>
 
-        <label for="problem">Problem: </label>
-        <textarea name="problem" id="problem" rows="7" cols="35" required></textarea>
+              <div class="input-field message">
+                <label for="problem">Problem: </label>
+                <textarea name="problem" id="problem" rows="7" cols="35"></textarea>
+              </div>
 
-        <input type="reset" value="Cancel">
-        <button type="submit" (click)=null>Create</button> <!-- verify that the default tech value isn't selected before submission else throw error -->
-      </div>
+              <div id="form-btns">
+                <input class="action-buttons" id="cancel-btn" type="reset" value="Cancel" onclick="closeOrderForm()">
+                <button class="action-buttons" type="submit" (click)=null>Create</button> <!-- verify that the default tech value isn't selected before submission else throw error -->
+              </div>
 
-      <div id="filter-options">
-        <!-- all:assigned:completed -->
+            </form>
+          </div>
+        </div>
       </div>
     </div>
 
