@@ -7,9 +7,10 @@
   justify-self: center;
   justify-content: center;
 }
+  #user-nav a:hover { background-color: var(--powderBlue); color: var(--lakeBlue);  }
   #nav-home {
     border-radius: 10px;
-    background-color: #21304a;
+    background-color: var(--lakeBlue);
     color: #ccc;
     padding: 15px;
     margin: 20px;

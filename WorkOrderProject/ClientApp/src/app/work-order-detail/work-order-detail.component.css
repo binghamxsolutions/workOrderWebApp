@@ -4,5 +4,30 @@
 /* GENERAL STYLES */
 
 /* grid styles */
-h2 {font-weight: bold;}
-h3 {font-style: italic;}
+h2, #tech-name {font-weight: bold;}
+h3, #tech-id {
+  font-style: italic;
+}
+
+#tech-info:hover #tech-tooltip {
+    display: grid;
+}
+#tech-tooltip {
+    row-gap: 25px;
+    position: absolute;
+    background-color: var(--paleBlue);
+    color: var(--peacockBlue);
+    border: 1px solid var(--spruceBlue);
+    filter: drop-shadow(1px 1px 2px var(--midnight));
+    padding: 25px;
+    word-wrap: break-word;
+    display: none;
+    z-index: 11;
+}
+  #tech-tooltip ul {list-style-type: none;}
+  #tech-name {margin: 0px; text-align: left;}
+
+
+  @media screen and (max-width: 768px) {
+      #tech-tooltip {width: 70%;}
+  }

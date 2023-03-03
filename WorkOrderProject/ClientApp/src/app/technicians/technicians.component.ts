@@ -11,7 +11,7 @@ import { Technician } from '../technician';
   styleUrls: ['./technicians.component.css']
 })
 export class TechniciansComponent implements OnInit {
-  public technicians: Technician[] = [];
+  public technicians?: Technician[];
 
   constructor(private route: ActivatedRoute, private technicianService: TechnicianService, private location: Location) { }
 

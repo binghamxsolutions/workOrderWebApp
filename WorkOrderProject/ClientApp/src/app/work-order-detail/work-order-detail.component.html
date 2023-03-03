@@ -10,10 +10,16 @@
         <li>Date Received: {{workOrder.dateReceived}}</li>
         <li>Date Assigned: {{workOrder.dateAssigned}}</li>
         <li>Status: {{workOrder.status}}</li>
-        <li>Tech ID: {{workOrder.techId}}</li> <!-- make this a hoverable item with a tooltip about the tech -->
+        <li id="tech-info">Tech ID: {{workOrder.techId}}
+          <div *ngIf="technician" id="tech-tooltip">
+            <h4>Tech ID#: {{workOrder.techId}}</h4>
+            <ul>
+              <li id="tech-name"><h1>{{technician.name}}</h1></li>
+              <li>{{technician.email}}</li>
+            </ul>
+          </div>
+        </li>
       </ul>
-
-      <div tech><!-- create tech info tooltip --></div>
     </div>
 
     <div class="wo-details" id="contact-info">

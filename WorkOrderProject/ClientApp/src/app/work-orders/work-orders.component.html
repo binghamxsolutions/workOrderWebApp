@@ -6,13 +6,12 @@
     <div id="actions">
       <div id="user-action">
         <div class="user-interactive">
-          <select class="action-buttons" id="filter">
-            <option>Open</option>
-            <option>Complete</option>
+          <select class="action-buttons" id="filter" name="filter" onchange="colorFilter()">
+            <option value="none" selected disabled hidden>Status Filter</option>
+            <option value="">All</option>
+            <option value="open">Open</option>
+            <option value="complete">Complete</option>
           </select>
-          <div id="filter-options">
-            <!-- all:assigned:completed -->
-          </div>
         </div>
 
         <div class="user-interactive">

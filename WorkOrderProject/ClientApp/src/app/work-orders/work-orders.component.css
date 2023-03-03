@@ -31,6 +31,9 @@ h1, th, td {text-align: center;}
       color: var(--powderBlue);
   }
   .action-buttons:focus:hover {color: var(--paleBlue); text-decoration: underline;}
+  .action-buttons option {background-color: var(--powderBlue); color: var(--peacockBlue);}
+  .action-buttons option:hover {background-color: var(--spruceBlue); color: var(--powderBlue);}
+  
   #add-new {float: right;}
 
 

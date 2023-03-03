@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { WorkOrderService } from '../work-order.service';
 import { WorkOrder } from '../work-order';
+import { TechnicianService } from '../technician.service';
+import { Technician } from '../technician';
 
 @Component({
   selector: 'app-work-order-detail',
@@ -11,6 +13,7 @@ import { WorkOrder } from '../work-order';
 })
 export class WorkOrderDetailComponent implements OnInit {
   workOrder?: WorkOrder | undefined;
+  technician?: Technician | undefined;
 
   constructor(private route: ActivatedRoute, private workOrderService: WorkOrderService, private location: Location) { }
 

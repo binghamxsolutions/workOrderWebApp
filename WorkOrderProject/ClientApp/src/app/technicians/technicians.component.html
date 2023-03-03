@@ -2,11 +2,11 @@
 <section class="parent-container">
   <div id="technicians">
     <h1>Meet Our Techs</h1>
-    
+
     <div id="tech-list">
       <!-- iterable tech card template -->
       <div *ngIf="technicians">
-        <div *ngFor="let tech in technicians">
+        <div *ngFor="let tech of technicians">
           <section class="tech-card" (click)="techDetail(tech.id)">
             <div class="tech-name"><p>{{tech.name}}</p></div>
 
