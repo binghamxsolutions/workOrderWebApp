@@ -1,28 +1,27 @@
 <section class="parent-container" *ngIf="technician">
-  <a id="nav-back" href="" (click)="goBack()">Go Back</a>
-  <h1>{{technician.name}}</h1>
+  <a id="nav-back" href="javascript:history.back()">Go Back</a>
+  <h1>{{technician.technicianName}}</h1>
 
   <div id="tech">
-
     <div class="tech-info" id="personal-details">
       <h2>Tech Info</h2>
       <ul>
-        <li><span class="identifier">ID No.: </span>{{technician.id}}</li>
-        <li><span class="identifier">Email: </span><a href={{technician.email}}>{{technician.email}}</a></li>
+        <li><span class="identifier">ID No.: </span>{{technician.technicianId}}</li>
+        <li><span class="identifier">Email: </span><a href={{technician.technicianEmail}}>{{technician.technicianEmail}}</a></li>
       </ul>
     </div>
 
     <div class="tech-info" id="work-orders">
       <h2>Work Orders</h2>
-      <div *ngIf="!workOrders">
+      <div *ngIf="workOrders">
         <table>
           <tr class="work-order-card header"><th>W.O. #</th><th>Status</th></tr>
-          <tr *ngFor="let workOrder in workOrders" class="work-order-card"><td class="work-order-id"><a href="/order/{{workOrder.woNum}}">{{workOrder.woNum}}</a></td><td class="work-order-status">{{workOrder.status}}</td></tr>
+          <tr *ngFor="let workOrder of workOrders | keyvalue" class="work-order-card"><td class="work-order-id"><a routerLink="/order/{{workOrder.key}}">{{workOrder.key}}</a></td><td class="work-order-status">{{workOrder.value}}</td></tr>
         </table>
       </div>
 
 
-      <p *ngIf="!workOrders">{{technician.name}} has not been assigned to any work orders yet!</p>
+      <p id="errorMsg" *ngIf="!workOrders">{{technician.technicianName}} has not been assigned to any work orders yet!</p>
     </div>
   </div>
 </section>

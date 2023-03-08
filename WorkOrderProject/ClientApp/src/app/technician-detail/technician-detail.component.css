@@ -4,25 +4,25 @@
 
 /* grid styles */
 .tech-info, .work-order-card,
-#empty-order-list, #info-list {display: grid;}
-#info-list {
-  justify-content: space-around;
-  grid-template-columns: repeat(2, auto);
+#empty-order-list {display: grid;}
+.tech-info {
+  width: 70vw;
+  grid-auto-flow: row;
 }
-  #info-list li {
+  .tech-info li {
     list-style-type: none;
     font-family: Calibri, sans-serif;
     font-size: 20pt;
     line-height: 1.15em;
   }
-  .identifier {font-weight: bold;}
-
+  .identifier {font-weight: bold; }
+    .tech-info a {
+      text-decoration: underline;
+      color: var(--stoneBlue);
+    }
+      .tech-info a:hover {color: var(--midnight);}
 /* tech personal detail styles */
 h2 {text-align: left;}
-.tech-info {
-  width: 70vw;
-  grid-auto-flow: row;
-}
 
 
 /* work order list styles */
@@ -36,7 +36,6 @@ h2 {text-align: left;}
     text-align: center;
     align-content: center;
     border-radius: 25px;
-    filter: drop-shadow(1px 1px 3px #000);
     text-decoration: none;
     color: black;
     padding: 4px;
@@ -54,19 +53,26 @@ h2 {text-align: left;}
     .header {
       text-align: center;
       font-size: 24pt;
+      color: var(--lakeBlue);
     }
 
 
 /* MOBILE STYLES */
 @media screen and (max-width: 480px) {
     .work-order-card {width: 100%;}
-      .header {display: none;}
+      .header {font-size: 18pt;}
     h2 {text-align: center;}
     #tech {margin: 35px;}
 }
 
 /* SHARED MOBILE AND TABLET STYLES */
 @media screen and (max-width: 480px),  screen and (min-width: 481px) and (max-width: 768px) {
-    #info-list {grid-template-columns: 100%; row-gap: 25px;}
-    #info-list li {word-wrap: break-word; font-size: 16pt;}
+  .tech-info {
+    grid-template-columns: 100%;
+    row-gap: 25px;
+  }
+    .tech-info li {
+      word-wrap: break-word;
+      font-size: 16pt;
+    }
 }

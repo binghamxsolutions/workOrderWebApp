@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
 import { TechnicianService } from '../technician.service';
 import { Technician } from '../technician';
 import { WorkOrder } from '../work-order';
 import { WorkOrderService } from '../work-order.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-technician-detail',
@@ -13,11 +13,13 @@ import { WorkOrderService } from '../work-order.service';
 })
 
 export class TechnicianDetailComponent implements OnInit {
-  //@Input() technician?: Technician;
+  id: number;
   technician?: Technician;
-  workOrders?: WorkOrder[];
+  workOrders?: Map<number, string>;
 
-  constructor(private route: ActivatedRoute, private technicianService: TechnicianService, private workOrderService: WorkOrderService, private location: Location) { }
+  constructor(private router: Router, private route: ActivatedRoute, private technicianService: TechnicianService, private workOrderService: WorkOrderService) {
+    this.id = Number(this.route.snapshot.paramMap.get('id'));
+  }
 
   /**
    * Calls the getTechnician function after the page loads
@@ -25,6 +27,7 @@ export class TechnicianDetailComponent implements OnInit {
   */
   ngOnInit(): void {
     this.getTechnician();
+    this.getWorkOrders();
   }
 
   /**
@@ -32,8 +35,7 @@ export class TechnicianDetailComponent implements OnInit {
    * If that technician does not exist, the web app will re-route to a 404 page.
   */
   getTechnician(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.technicianService.getTechnician(id).subscribe(technician => {
+    this.technicianService.getTechnician(this.id).subscribe(technician => {
       if (technician) {
         this.technician = technician;
       } else {
@@ -43,21 +45,13 @@ export class TechnicianDetailComponent implements OnInit {
   }
 
   getWorkOrders(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.workOrderService.getFilteredWorkOrders(id).subscribe(workOrders => this.workOrders= workOrders);
-  }
-
-  /**
-   * This method creates a simple route to the previous page
-  */
-  goBack(): void {
-    this.location.back();
+    this.workOrderService.getTechFilteredWorkOrders(this.id).subscribe(workOrders => { console.log("results: " + workOrders); this.workOrders = workOrders });
   }
 
   /**
     *This method attempts to redirect to the 404 page if the workOrder does not exist
   */
   error404(): void {
-    this.location.go("/404"), 3000;    
+    this.router.navigateByUrl('404');
   }
 }

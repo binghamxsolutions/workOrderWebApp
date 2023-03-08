@@ -1,21 +1,21 @@
 <section class="parent-container" *ngIf="workOrder">
-  <a id="nav-back" href="" (click)="goBack()">Go Back</a>
-  <h1>Work Order {{workOrder.woId}}</h1>
+  <a id="nav-back" href="javascript:history.back()">Go Back</a>
+  <h1>Work Order {{workOrder.woNum}}</h1>
 
   <div id="workOrder">
     <div class="wo-details" id="overview">
       <h2>Overview</h2>
 
       <ul>
-        <li>Date Received: {{workOrder.dateReceived}}</li>
-        <li>Date Assigned: {{workOrder.dateAssigned}}</li>
+        <li>Date Received: {{workOrder.dateReceived | date: 'shortDate'}}</li>
+        <li>Date Assigned: {{workOrder.dateAssigned | date: 'shortDate'}}</li>
         <li>Status: {{workOrder.status}}</li>
-        <li id="tech-info">Tech ID: {{workOrder.techId}}
+        <li id="tech-info">Tech ID: <a routerLink="/techs/tech/{{workOrder.technicianId}}">{{workOrder.technicianId}}</a>
           <div *ngIf="technician" id="tech-tooltip">
-            <h4>Tech ID#: {{workOrder.techId}}</h4>
+            <h4>Tech ID#: {{workOrder.technicianId}}</h4>
             <ul>
-              <li id="tech-name"><h1>{{technician.name}}</h1></li>
-              <li>{{technician.email}}</li>
+              <li><h1 id="tech-name">{{technician.technicianName}}</h1></li>
+              <li><a href="mailto:{{technician.technicianEmail}}">{{technician.technicianEmail}}</a></li>
             </ul>
           </div>
         </li>
@@ -40,7 +40,7 @@
       <h3>Technician Comments</h3>
       <p>{{workOrder.techComments}}</p>
 
-      <p *ngIf="workOrder.status=='completed'">This work order was closed on: {{workOrder.dateComplete}}<p>
+      <p id="status" *ngIf="workOrder.status=='Closed'">This work order was closed on: {{workOrder.dateComplete | date: 'shortDate'}}<p>
     </div>
   </div>
 </section>

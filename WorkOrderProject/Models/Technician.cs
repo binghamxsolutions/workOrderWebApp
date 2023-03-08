@@ -6,8 +6,8 @@
     /// </summary>
     public class Technician
     {
-        public int id { get; set; }
-        public string name { get; set; } = null!;
-        public string email { get; set; } = null!;
+        public int TechnicianId { get; set; }
+        public string TechnicianName { get; set; } = null!;
+        public string TechnicianEmail { get; set; } = null!;
     }
 }

@@ -9,7 +9,10 @@ import { WorkOrder } from './work-order';
 })
 export class WorkOrderService {
   httpOptions = {
-    header: new HttpHeaders({ 'Content-Type': 'application/json' })
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*'
+    })
   };
   base?: string;
 
@@ -21,23 +24,34 @@ export class WorkOrderService {
    * @returns An `Obseverable` array of type `WorkOrder`
    */
   getWorkOrders(): Observable<WorkOrder[]> {
-    return this.http.get<WorkOrder[]>(this.base + "getworkorders").pipe(
+    return this.http.get<WorkOrder[]>(this.base + "workorder/getworkorders", this.httpOptions).pipe(
       catchError(this.handleError<WorkOrder[]>('getWorkOrders', []))
     );
   }
 
   /**
    * Retrieves the filtered work order list from the database by matching the
-   * technicianId
+   * status
    * @param techId This will be the filter for the returned list
    * @returns An `Obseverable` array of type `WorkOrder`
    */
-  getFilteredWorkOrders(techId: number): Observable<WorkOrder[]> {
-    return this.http.get<WorkOrder[]>("getworkorder").pipe(
+  getFilteredWorkOrders(status: string): Observable<WorkOrder[]> {
+    return this.http.get<WorkOrder[]>(this.base + "workorder/getworkordersbystatus?status=" + status).pipe(
       catchError(this.handleError<WorkOrder[]>('getFilteredWorkOrders', []))
     );
   }
 
+  getTechFilteredWorkOrders(id: number): Observable<Map<number, string>> {
+    return this.http.get<Map<number, string>>(this.base + "workorder/getworkorders?id=" + id).pipe(
+      catchError(this.handleError<Map<number, string>>('getTechFilteredWorkOrders'))
+    );
+  }
+
+  getStatuses(): Observable<string[]> {
+    return this.http.get<string[]>(this.base + "workorder/getstatuses").pipe(
+      catchError(this.handleError<string[]>('getStatuses', []))
+    );
+  }
 
   /**
    * 
@@ -45,8 +59,7 @@ export class WorkOrderService {
    * @returns 
    */
   getWorkOrder(id: number): Observable<WorkOrder> {
-    const url = '${this.workOrdersUrl}/${id}';
-    return this.http.get<WorkOrder>(url).pipe(
+    return this.http.get<WorkOrder>(this.base + 'workorder/getworkorder?id=' + id).pipe(
       catchError(this.handleError<WorkOrder>('getWorkOrder woId = ${id}'))
     );
   }

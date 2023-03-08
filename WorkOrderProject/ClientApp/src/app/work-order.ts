@@ -1,13 +1,13 @@
 export interface WorkOrder {
-  woId: number;
+  woNum: number;
   email: string | null;
   status: string | null;
-  dateReceived: string | null;
-  dateAssigned: string | null;
-  dateComplete: string | null;
+  dateReceived: Date | null;
+  dateAssigned: Date | null;
+  dateComplete: Date | null;
   contactName: string | null;
   techComments: string | null;
   contactNumber: string | null;
-  techId: number | null;
+  technicianId: number | null;
   problem: string | null;
 }

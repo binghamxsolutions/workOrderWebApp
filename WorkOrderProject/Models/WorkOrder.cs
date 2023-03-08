@@ -9,20 +9,17 @@ namespace WorkOrderProject.Models
     /// </summary>
     public class WorkOrder
     {
-        public int woNum { set; get; }
-        public string? contactName { set; get; }
-        public string? contactNumber { set; get; }
-        public string? email { set; get; }
-        [DataType(DataType.Date)] //ensures that only the Date is passes, not the Date and Time
-        public DateTime? dateReceived { set; get; }
-        public string? problem { set; get; }
-        [DataType(DataType.Date)]
-        public DateTime? dateAssigned { set; get; }
-        public int? technicianId { set; get; }
-        public string? status { set; get; }
-        public string? technicianComments { set; get; }
-        [DataType(DataType.Date)]
-        public DateTime? dateComplete { set; get; }
+        public int WoNum { set; get; }
+        public string ContactName { set; get; } = null!;
+        public string ContactNumber { set; get; } = null!;
+        public string Email { set; get; } = null!;
+        public DateTime? DateReceived { set; get; }
+        public string Problem { set; get; } = null!;
+        public DateTime? DateAssigned { set; get; }
+        public int? TechnicianId { set; get; }
+        public string Status { set; get; } = null!;
+        public string TechnicianComments { set; get; } = null!;
+        public DateTime? DateComplete { set; get; }
 
 
         // Date solution found on https://learn.microsoft.com/en-us/aspnet/core/tutorials/first-mvc-app/adding-model?view=aspnetcore-7.0&tabs=visual-studio

@@ -38,8 +38,8 @@ import { FooterComponent } from './footer/footer.component';
       { path: '', component: WelcomeComponent, pathMatch: 'full' },
       { path: 'orders', component: WorkOrdersComponent },
       { path: 'techs', component: TechniciansComponent },
-      { path: 'tech/:id', component: TechnicianDetailComponent },
-      { path: 'order/:id', component: WorkOrderDetailComponent },
+      { path: 'techs/tech/:id', component: TechnicianDetailComponent },
+      { path: 'orders/order/:id', component: WorkOrderDetailComponent },
       { path: 'welcome', component: WelcomeComponent },
       { path: '404', component: PageNotFoundComponent },
       { path: '**', redirectTo: '404'}

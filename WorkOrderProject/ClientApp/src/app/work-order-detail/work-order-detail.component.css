@@ -4,14 +4,12 @@
 /* GENERAL STYLES */
 
 /* grid styles */
-h2, #tech-name {font-weight: bold;}
-h3, #tech-id {
-  font-style: italic;
-}
-
-#tech-info:hover #tech-tooltip {
-    display: grid;
-}
+h2, #tech-name, #status {font-weight: bold;}
+h3, #tech-id, #status {font-style: italic;}
+#status {text-align: center;}
+#tech-info a{color: blue; text-decoration: underline;}
+.wo-details ul {grid-template-columns: 50% 50%; justify-content: space-around;list-style-type: none;}
+.wo-details ul, #tech-info:hover #tech-tooltip {display: grid;}
 #tech-tooltip {
     row-gap: 25px;
     position: absolute;
@@ -24,10 +22,12 @@ h3, #tech-id {
     display: none;
     z-index: 11;
 }
-  #tech-tooltip ul {list-style-type: none;}
-  #tech-name {margin: 0px; text-align: left;}
+  #tech-tooltip ul {grid-template-columns: 100%;}
+  #tech-name {margin: 0px; text-align: left; color: var(--spruceBlue);}
 
 
   @media screen and (max-width: 768px) {
       #tech-tooltip {width: 70%;}
+    .wo-details ul {grid-template-columns: 100%;}
+    .wo-details li {word-wrap:anywhere;}
   }

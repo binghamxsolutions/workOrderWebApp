@@ -5,13 +5,13 @@ h1, .tech-name {text-align: center;}
 a {text-decoration: none;}
 
 /* grid styles */
-#tech-list, .tech-card, .tech-name {display: grid;}
+#tech-list, #techs, .tech-card, .tech-name {display: grid;}
 
-#tech-list {
+#tech-list, #techs {justify-content: center;}
+#techs {
     grid-template-columns: repeat(auto-fit, 350px);
     row-gap: 30px;
     column-gap: 15px;
-    justify-content: center;
 }
 
 /* tech contact card styles */
@@ -32,7 +32,8 @@ a {text-decoration: none;}
   word-wrap: break-word;
   border-radius: 10px 0px 0px 10px;
 }
-.tech-name p {margin: 0px;}
+  .tech-name p {margin: 0px;}
+  .tech-name p, .tech-info {padding: 5px;}
 .tech-info {
   background-color: #aaa;
   border-radius: 0px 10px 10px 0px;

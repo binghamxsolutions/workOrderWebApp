@@ -10,20 +10,22 @@ import { Technician } from './technician';
 export class TechnicianService {
   base?: string;
   httpOptions = {
-    header: new HttpHeaders({ 'Content-Type': 'application/json' })
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*'
+    })
   };
 
   constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl: string) { this.base = baseUrl; }
 
   getTechnicians(): Observable<Technician[]> {
-    return this.http.get<Technician[]>(this.base + "gettechnicians").pipe(
+    return this.http.get<Technician[]>(this.base + "technician", this.httpOptions).pipe(
       catchError(this.handleError<Technician[]>('getTechnicians', []))
     );
   }
 
   getTechnician(id: number): Observable<Technician> {
-    const url = '${this.techniciansUrl}/${id}';
-    return this.http.get<Technician>(this.base + 'gettechnician?id=$id').pipe(
+    return this.http.get<Technician>(this.base + 'technician/gettechnician?id='+ id).pipe(
       catchError(this.handleError<Technician>('getTechnician techId = ${id}'))
     );
   }

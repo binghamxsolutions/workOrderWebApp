@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.EntityFrameworkCore.Query;
+using System;
 using System.Diagnostics;
 using WorkOrderProject.Models;
 
@@ -23,13 +24,7 @@ namespace WorkOrderProject
             Console.WriteLine(conn.State);
         }
 
-
-
-        // this method is empty for future iterations with more CRUD operations
-        public void Update(string table, string columnName, string condition) { }
-
-
-        // methods for the workorder table
+        // Create methods
         public void CreateWorkOrder(WorkOrder workOrder)
         {
             // TODO  iteration thru the object to properly format the <values>
@@ -43,120 +38,6 @@ namespace WorkOrderProject
             conn.Close();
         }
 
-        public WorkOrder[] ReadWorkOrderTable()
-        {
-            WorkOrder[] records;
-            List<WorkOrder> workOrders = new(); 
-            sqlStatement = "SELECT * FROM workorders";
-
-            cmd = new SqlCommand(sqlStatement, conn);
-            dataReader = cmd.ExecuteReader();
-            int position = 0;
-
-            while(dataReader.Read())
-            {
-                WorkOrder tempOrder = new()
-                {
-                    woNum = dataReader.GetInt32(position),
-                    email = dataReader.GetString(position),
-                    status = dataReader.GetString(position),
-                    dateReceived = dataReader.GetDateTime(position),
-                    dateAssigned = dataReader.GetDateTime(position),
-                    dateComplete = dataReader.GetDateTime(position),
-                    contactName = dataReader.GetString(position),
-                    technicianComments = dataReader.GetString(position),
-                    contactNumber = dataReader.GetString(position),
-                    technicianId = dataReader.GetInt32(position),
-                    problem = dataReader.GetString(position)
-                };
-                Console.Write(tempOrder);
-                workOrders.Add(tempOrder);
-
-                position++;
-            }
-            records = workOrders.ToArray();
-            // iteration code modified from: https://stackoverflow.com/questions/5765785/add-elements-to-object-array
-
-            dataReader.Close();
-            cmd.Dispose();
-            conn.Close();
-
-            return records;
-        }
-
-        public WorkOrder[] ReadWorkOrderTable(string filter, string condition, string order)
-        {
-            WorkOrder[] records;
-            List<WorkOrder> workOrders = new ();
-            sqlStatement = "SELECT * FROM workorders WHERE " + filter + "=" + condition + " ORDER BY DateReceived " + order;
-            cmd = new SqlCommand(sqlStatement, conn);
-            dataReader = cmd.ExecuteReader();
-            int position = 0;
-
-            while (dataReader.Read())
-            {
-                WorkOrder tempOrder = new()
-                {
-                    woNum = dataReader.GetInt32(position),
-                    email = dataReader.GetString(position),
-                    status = dataReader.GetString(position),
-                    dateReceived = dataReader.GetDateTime(position),
-                    dateAssigned = dataReader.GetDateTime(position),
-                    dateComplete = dataReader.GetDateTime(position),
-                    contactName = dataReader.GetString(position),
-                    technicianComments = dataReader.GetString(position),
-                    contactNumber = dataReader.GetString(position),
-                    technicianId = dataReader.GetInt32(position),
-                    problem = dataReader.GetString(position)
-                };
-                Console.Write(tempOrder);
-                workOrders.Add(tempOrder);
-
-                position++;
-            }
-            records = workOrders.ToArray();
-
-            cmd.Dispose();
-            dataReader.Close();
-            conn.Close();
-
-            return records;
-        }
-
-
-        public WorkOrder ReadWorkOrderRecord(string filter, string condition)
-        {
-            WorkOrder record;
-            sqlStatement = "SELECT * FROM technicians WHERE " + filter + "=" + condition;
-            cmd = new SqlCommand(sqlStatement, conn);
-            dataReader = cmd.ExecuteReader();
-            int position = 0;
-
-            cmd = new SqlCommand(sqlStatement, conn);
-            record = new()
-            {
-                woNum = dataReader.GetInt32(position),
-                email = dataReader.GetString(position),
-                status = dataReader.GetString(position),
-                dateReceived = dataReader.GetDateTime(position),
-                dateAssigned = dataReader.GetDateTime(position),
-                dateComplete = dataReader.GetDateTime(position),
-                contactName = dataReader.GetString(position),
-                technicianComments = dataReader.GetString(position),
-                contactNumber = dataReader.GetString(position),
-                technicianId = dataReader.GetInt32(position),
-                problem = dataReader.GetString(position)
-            };
-
-            cmd.Dispose();
-            dataReader.Close();
-            conn.Close();
-
-            return record;
-        }
-
-
-        // methods for the technicians table
         public void CreateTechnician(Technician technician)
         {
             sqlStatement = "INSERT INTO technicians" + "<VALUES>";
@@ -169,92 +50,331 @@ namespace WorkOrderProject
         } // this method is available only  for future iterations. Please update if needed
 
 
-        public Technician[] ReadTechnicianTable() {
-            Technician[] records;
-            List<Technician> technicians = new ();
+        // Read methods
+        /**
+         * Queries the <c>workOrders</c> table for 
+         * all records.
+         */
+        public WorkOrder[] ReadWorkOrders()
+        {
+            WorkOrder[] records;
+            List<WorkOrder> workOrders = new();
+            sqlStatement = "SELECT * FROM workorders";
 
-            sqlStatement = "SELECT * FROM technicians";
             cmd = new SqlCommand(sqlStatement, conn);
             dataReader = cmd.ExecuteReader();
-            int position = 0;
 
-            cmd = new SqlCommand(sqlStatement, conn);
             while (dataReader.Read())
             {
-                Technician tempOrder = new()
-                {
-                    id = dataReader.GetInt32(position),
-                    email = dataReader.GetString(position),
-                    name = dataReader.GetString(position),
-                };
-                Console.Write(tempOrder);
-                technicians.Add(tempOrder);
-
-                position++;
+                WorkOrder temp = validateWorkOrderColumns(dataReader);
+                workOrders.Add(temp);
             }
-            records = technicians.ToArray();
-            
-            cmd.Dispose();
+            records = workOrders.ToArray();
+            // iteration code modified from: https://stackoverflow.com/questions/5765785/add-elements-to-object-array
+
             dataReader.Close();
+            cmd.Dispose();
             conn.Close();
 
-            return records; 
+            return records;
         }
 
-        
-        public Technician[] ReadTechnicianTable(string filter, string condition)
+        /**
+         * Queries the <c>workOrders</c> table for all 
+         * records that match the <c>status</c>
+         */
+        public WorkOrder[] ReadWorkOrders(string status)
         {
-            Technician[] records;
-            List<Technician> technicians = new ();
-            sqlStatement = " SELECT * FROM technicians WHERE " + filter + "=" + condition;
+            WorkOrder[] records;
+            List<WorkOrder> workOrders = new();
+            sqlStatement = "SELECT * FROM workorders WHERE Status='" + status + "'";// + " ORDER BY DateReceived DESC";
+
             cmd = new SqlCommand(sqlStatement, conn);
             dataReader = cmd.ExecuteReader();
-            int position = 0;
 
             while (dataReader.Read())
             {
-                Technician tempOrder = new()
-                {
-                    id = dataReader.GetInt32(position),
-                    email = dataReader.GetString(position),
-                    name = dataReader.GetString(position)
-                };
-                Console.Write(tempOrder);
-                technicians.Add(tempOrder);
-
-                position++;
+                WorkOrder temp = validateWorkOrderColumns(dataReader);
+                workOrders.Add(temp);
             }
-            records = technicians.ToArray();
-            
-            
+            records = workOrders.ToArray();
+
             cmd.Dispose();
             dataReader.Close();
             conn.Close();
 
             return records;
-        } // this method only exists for future implementation. Please update if needed
+        }
 
-        public Technician ReadTechnicianRecord(string filter, string condition)
+        /**
+         * Queries the workOrders table for different status 
+         * values.
+         */
+        public List<string> ReadWorkOrderStatuses()
         {
-            Technician record;
-            sqlStatement = "SELECT * FROM technicians WHERE " + filter + "=" + condition;
+            List<string> statuses = new();
+            sqlStatement = "SELECT DISTINCT Status FROM workOrders";
             cmd = new SqlCommand(sqlStatement, conn);
             dataReader = cmd.ExecuteReader();
-            int position = 0;
 
-            record = new()
+            cmd = new SqlCommand(sqlStatement, conn);
+            while (dataReader.Read())
             {
-                name = dataReader.GetString(position),
-                id = dataReader.GetInt32(position),
-                email = dataReader.GetString(position)
-            };
+                statuses.Add(dataReader.GetString(0));
+            }
+
+            return statuses;
+        }
+        
+        /**
+         * Queries the workOrders table for records that match the 
+         * provided TechnicianId.
+         */
+        public Dictionary<int, string> ReadWorkOrderStatuses(int id)
+        {
+            Dictionary<int, string> orders = new();
+            sqlStatement = "SELECT WONum, Status FROM workOrders WHERE TechnicianID='" + id + "'";
+            cmd = new SqlCommand(sqlStatement, conn);
+            dataReader = cmd.ExecuteReader();
+
+            while (dataReader.Read())
+            {
+                KeyValuePair<int, string> temp = validateInfoColumns(dataReader);
+                orders.Add(temp.Key, temp.Value);
+            }
+
+            return orders;
+        }
+        
+        /**
+         * 
+         */
+        public WorkOrder ReadWorkOrderRecord(int woId)
+        {
+            WorkOrder record;
+            sqlStatement = "SELECT * FROM workOrders WHERE WoNum='" + woId +"'";
+            cmd = new SqlCommand(sqlStatement, conn);
+            dataReader = cmd.ExecuteReader();
+
+            cmd = new SqlCommand(sqlStatement, conn);
+            dataReader.Read();
+            record = validateWorkOrderColumns(dataReader);
 
             cmd.Dispose();
             dataReader.Close();
             conn.Close();
-            
+
+            return record;
+        }
+
+        /**
+         * Queries the technicians table for all
+         * records.
+         */
+        public Technician[] ReadTechnicians()
+        {
+            Technician[] records;
+            List<Technician> technicians = new();
+
+            sqlStatement = "SELECT * FROM technicians";
+            cmd = new SqlCommand(sqlStatement, conn);
+            dataReader = cmd.ExecuteReader();
+
+            cmd = new SqlCommand(sqlStatement, conn);
+            while (dataReader.Read())
+            {
+                Technician temp = new()
+                {
+                    TechnicianId = dataReader.GetInt32(0),
+                    TechnicianName = dataReader.GetString(1),
+                    TechnicianEmail = dataReader.GetString(2),
+                }; // no validation required as all table fields are non-nullable
+                technicians.Add(temp);
+            }
+            records = technicians.ToArray();
+
+            cmd.Dispose();
+            dataReader.Close();
+            conn.Close();
+
+            return records;
+        }
+
+        /**
+         * Queries the technicians table for the id's and 
+         * names of the table members
+         */
+        public Dictionary<int, string> ReadTechnicianList()
+        {
+            Dictionary<int, string> technicians = new();
+            sqlStatement = "SELECT TechnicianId, TechnicianName FROM technicians";
+            cmd = new SqlCommand(sqlStatement, conn);
+            dataReader = cmd.ExecuteReader();
+
+            while (dataReader.Read())
+            {
+                KeyValuePair<int, string> temp = validateInfoColumns(dataReader);
+                technicians.Add(temp.Key, temp.Value);
+            }
+
+            cmd.Dispose();
+            dataReader.Close();
+            conn.Close();
+
+            return technicians;
+        }
+
+        /**
+         * Queries the technician table for the record that
+         * matches the TechnicianId
+         */
+        public Technician ReadTechnicianRecord(int id)
+        {
+            Technician record;
+            sqlStatement = "SELECT * FROM technicians WHERE TechnicianID='" + id +"'";
+            cmd = new SqlCommand(sqlStatement, conn);
+            dataReader = cmd.ExecuteReader();
+
+            while (dataReader.Read())
+            {
+                record = new()
+                {
+                    TechnicianId = dataReader.GetInt32(0),
+                    TechnicianName = dataReader.GetString(1),
+                    TechnicianEmail = dataReader.GetString(2)
+                };
+                return record;
+            }
+            record = new();
+
+            cmd.Dispose();
+            dataReader.Close();
+            conn.Close();
+
             return record;
 
+        }
+
+
+        // Update method NOTE: this method is empty for future iterations with more CRUD operations
+        public void Update(string table, string columnName, string condition) { }
+
+        /**
+         * Verifies if the columns of the workOrders table listed in 
+         * the <c>dataReader</c> are non-nullable. If they are, the appropriate 
+         * field is assigned a value. If not, no value is assigned.
+         */
+        private WorkOrder validateWorkOrderColumns(SqlDataReader dataReader)
+        {
+            WorkOrder temp = new WorkOrder();
+            for (int i = 0; i < 11; i++)
+            {
+                bool isNull = dataReader.IsDBNull(i);
+
+                switch (i) //checks for null values first then assigns value is one is present
+                {
+                    case 0:
+                        if (!isNull)
+                        {
+                            temp.WoNum = dataReader.GetInt32(i);
+                        }
+                        break;
+                    case 1:
+                        if (!isNull)
+                        {
+                            temp.Email = dataReader.GetString(i);
+                        }
+                        break;
+                    case 2:
+                        if (!isNull)
+                        {
+                            temp.Status = dataReader.GetString(i);
+                        }
+                        break;
+                    case 3:
+                        if (!isNull)
+                        {
+                            temp.DateReceived = dataReader.GetDateTime(i);
+                        }
+                        break;
+                    case 4:
+                        if (!isNull)
+                        {
+                            temp.DateAssigned = dataReader.GetDateTime(i);
+                        }
+                        break;
+                    case 5:
+                        if (!isNull)
+                        {
+                            temp.DateComplete = dataReader.GetDateTime(i);
+                        }
+                        break;
+                    case 6:
+                        if (!isNull)
+                        {
+                            temp.ContactName = dataReader.GetString(i);
+                        }
+                        break;
+                    case 7:
+                        if (!isNull)
+                        {
+                            temp.TechnicianComments = dataReader.GetString(i);
+                        }
+                        break;
+                    case 8:
+                        if (!isNull)
+                        {
+                            temp.ContactNumber = dataReader.GetString(i);
+                        }
+                        break;
+                    case 9:
+                        if (!isNull)
+                        {
+                            temp.TechnicianId = dataReader.GetInt32(i);
+                        }
+                        break;
+                    case 10:
+                        if (!isNull)
+                        {
+                            temp.Problem = dataReader.GetString(i);
+                        }
+                        break;
+                }
+            }
+            return temp;
+        }
+
+        /**
+         * Verifies if the id and value columns are non-nullable before
+         * assigning their respective fields values.
+         */
+        private KeyValuePair<int, string> validateInfoColumns(SqlDataReader dataReader)
+        {
+            int key = 0;
+            string value = "";
+
+            for (int i = 0; i < 2; i++)
+            {
+                bool isNull = dataReader.IsDBNull(i);
+                switch(i)
+                {
+                    case 0:
+                        if (!isNull) { 
+                            key = dataReader.GetInt32(i); 
+                        } // no else statement required as id fields are required
+
+                        break;
+                    case 1:
+                        if (!isNull) {
+                            value = dataReader.GetString(i);
+                        } // no else statement required as the default assignment for value is an empty string
+
+                        break;
+                }
+            }
+            KeyValuePair<int, string> temp = new (key, value);
+
+            return temp;
         }
     }
 }

@@ -8,9 +8,8 @@
         <div class="user-interactive">
           <select class="action-buttons" id="filter" name="filter" onchange="colorFilter()">
             <option value="none" selected disabled hidden>Status Filter</option>
-            <option value="">All</option>
-            <option value="open">Open</option>
-            <option value="complete">Complete</option>
+            <option value="" (click)="getWorkOrders()">All</option>
+            <option *ngFor="let status of statuses" value="{{status}}" (click)="getFilteredWorkOrders(status)">{{status}}</option>
           </select>
         </div>
 
@@ -40,7 +39,7 @@
                 <label for="technicians">Technician: </label>
                 <select name="technicians" id="technicians">
                   <option value="default" disabled selected>None selected</option>
-                  <option *ngFor="let tech in technicians" value="{{tech.id}}">{{tech.name}}</option>
+                  <option *ngFor="let tech of technicians" value="{{tech.technicianId}}">{{tech.technicianName}}</option>
                 </select>
               </div>
 
@@ -78,18 +77,18 @@
         </tr>
 
         <!-- iterable record format -->
-        <tr *ngFor="let workOrder in workOrders">
-          <td><button routerLink="/order/{{workOrder.id}}">{{workOrder.id}}</button></td>
-          <td>{{workOrder.dateReceived}}</td>
+        <tr *ngFor="let workOrder of workOrders">
+          <td><a routerLink="/orders/order/{{workOrder.woNum}}">{{workOrder.woNum}}</a></td>
+          <td>{{workOrder.dateReceived | date: 'shortDate'}}</td>
           <td>{{workOrder.contactName}}</td>
           <td>{{workOrder.contactNumber}}</td>
           <td>{{workOrder.email}}</td>
-          <td>{{workOrder.dateAssigned}}</td>
-          <td><a routerLink="/tech/{{workOrder.techId}}">{{workOrder.techId}}</a></td>
+          <td>{{workOrder.dateAssigned | date: 'shortDate'}}</td>
+          <td><a routerLink="/techs/tech/{{workOrder.technicianId}}">{{workOrder.technicianId}}</a></td>
           <td>{{workOrder.status}}</td>
           <td>{{workOrder.problem}}</td>
           <td>{{workOrder.techComments}}</td>
-          <td>{{workOrder.dateComplete}}</td>
+          <td>{{workOrder.dateComplete | date: 'shortDate'}}</td>
         </tr>
       </table>
 

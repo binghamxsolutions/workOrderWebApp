@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
 import { TechnicianService } from '../technician.service';
 import { Technician } from '../technician';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -13,7 +12,8 @@ import { Technician } from '../technician';
 export class TechniciansComponent implements OnInit {
   public technicians?: Technician[];
 
-  constructor(private route: ActivatedRoute, private technicianService: TechnicianService, private location: Location) { }
+
+  constructor(private router: Router, private technicianService: TechnicianService) { }
 
   /**
    * Calls the getTechnicians function after the page loads
@@ -28,7 +28,7 @@ export class TechniciansComponent implements OnInit {
    * present.
    */
   getTechnicians(): void {
-    this.technicianService.getTechnicians().subscribe(technicians => {
+   this.technicianService.getTechnicians().subscribe(technicians => {
       if (technicians.length > 0) {
         this.technicians = technicians;
       }
@@ -41,6 +41,6 @@ export class TechniciansComponent implements OnInit {
    * @param id The technician's id number
    */
   techDetail(id: number) {
-    this.location.go('/tech/$id');
+    this.router.navigateByUrl('techs/tech/' + id);
   }
 }
