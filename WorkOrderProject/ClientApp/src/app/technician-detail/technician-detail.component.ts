@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
 export class TechnicianDetailComponent implements OnInit {
   id: number;
   technician?: Technician;
-  workOrders?: Map<number, string>;
+  workOrders?: Record<number, string>[];
 
   constructor(private router: Router, private route: ActivatedRoute, private technicianService: TechnicianService, private workOrderService: WorkOrderService) {
     this.id = Number(this.route.snapshot.paramMap.get('id'));
@@ -45,7 +45,7 @@ export class TechnicianDetailComponent implements OnInit {
   }
 
   getWorkOrders(): void {
-    this.workOrderService.getTechFilteredWorkOrders(this.id).subscribe(workOrders => { console.log("results: " + workOrders); this.workOrders = workOrders });
+    this.workOrderService.getTechFilteredWorkOrders(this.id).subscribe(workOrders => { console.log("results: " + workOrders); });// this.workOrders = workOrders });
   }
 
   /**

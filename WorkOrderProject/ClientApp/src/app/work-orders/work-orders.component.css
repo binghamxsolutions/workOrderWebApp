@@ -25,6 +25,7 @@ h1, th, td {text-align: center;}
   .action-buttons:hover {
     background-color: var(--spruceBlue);
     color: var(--powderBlue);
+    cursor: pointer;
   }
   .action-buttons:focus {
       background-color: var(--peacockBlue);

@@ -41,9 +41,9 @@ export class WorkOrderService {
     );
   }
 
-  getTechFilteredWorkOrders(id: number): Observable<Map<number, string>> {
-    return this.http.get<Map<number, string>>(this.base + "workorder/getworkorders?id=" + id).pipe(
-      catchError(this.handleError<Map<number, string>>('getTechFilteredWorkOrders'))
+  getTechFilteredWorkOrders(id: number): Observable<Record<number,string>[]> {
+    return this.http.get<Record<number, string>[]>(this.base + "workorder/getworkorders?id=" + id).pipe(
+      catchError(this.handleError<Record<number, string>[]>('getTechFilteredWorkOrders'))
     );
   }
 
@@ -73,5 +73,4 @@ export class WorkOrderService {
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => { return of(result as T) };
   } //code sourced from: https://angular.io/tutorial/tour-of-heroes/toh-pt6#heroes-and-http
-
 }

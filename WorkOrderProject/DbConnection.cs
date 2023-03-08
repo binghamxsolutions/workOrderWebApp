@@ -21,7 +21,7 @@ namespace WorkOrderProject
             conn = new SqlConnection(connectionString);
 
             conn.Open();
-            Console.WriteLine(conn.State);
+            //Console.WriteLine(conn.State);
         }
 
         // Create methods
@@ -140,9 +140,10 @@ namespace WorkOrderProject
             while (dataReader.Read())
             {
                 KeyValuePair<int, string> temp = validateInfoColumns(dataReader);
-                orders.Add(temp.Key, temp.Value);
+                //orders.Add(temp.Key, temp.Value);
             }
 
+            orders.Add(12, "sup");
             return orders;
         }
         
@@ -372,8 +373,10 @@ namespace WorkOrderProject
                         break;
                 }
             }
-            KeyValuePair<int, string> temp = new (key, value);
+            //KeyValuePair<int, string> temp = new (key, value);
+            //Debug.WriteLine(temp);
 
+            KeyValuePair<int, string> temp = new(1, "hi");
             return temp;
         }
     }

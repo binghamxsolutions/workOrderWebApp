@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 })
 export class WorkOrderDetailComponent implements OnInit {
   id: number;
-  techId: number | undefined;
+  techId?: number;
   workOrder?: WorkOrder | undefined;
   technician?: Technician | undefined;
 
@@ -27,7 +27,7 @@ export class WorkOrderDetailComponent implements OnInit {
   */
   ngOnInit(): void {
     this.getWorkOrder();
-    this.getTechnician();
+    //setTimeout(this.getTechnician, 5000);
   }
 
   /** 
@@ -37,14 +37,15 @@ export class WorkOrderDetailComponent implements OnInit {
     this.workOrderService.getWorkOrder(this.id).subscribe(workOrder => {
       if (workOrder) {
         this.techId = workOrder.technicianId!;
+        this.getTechnician(this.techId);
         this.workOrder = workOrder;
       } else {
         this.error404();
       }
     });
   }
-  getTechnician(): void {
-    this.technicianService.getTechnician(this.id).subscribe(technician => {
+  getTechnician(id: number): void {
+    this.technicianService.getTechnician(id).subscribe(technician => {      
       if (technician) {
         this.technician = technician;
       }

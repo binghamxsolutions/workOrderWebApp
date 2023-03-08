@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { TechnicianService } from '../technician.service';
 import { Technician } from '../technician';
 
-
 @Component({
   selector: 'app-work-orders',
   templateUrl: './work-orders.component.html',
