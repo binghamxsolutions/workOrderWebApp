@@ -5,6 +5,7 @@ let form;
  * Opens the sub-menu when in mobile view
  */
 function showSubMenu() {
+  subMenu = document.getElementById("menu");
   subMenu.style.display = "grid";
 }
 
@@ -19,6 +20,7 @@ function closeSubMenu() {
  * Opens the modal form on request
  */
 function openOrderForm() {
+  form = document.getElementById("modal");
   form.style.display = "grid";
 }
 
@@ -26,6 +28,8 @@ function openOrderForm() {
  * Closes the modal form when canceled
  */
 function closeOrderForm() {
+  form.scrollTo(0, 0);
+  // ensures the form goes back to the top before closing
   form.style.display = "none";
 }
 
@@ -37,8 +41,5 @@ document.body.addEventListener('mouseup', function () {
 
 window.onload = function () {
   setTimeout(function () {
-    subMenu = document.getElementById("menu");
-    form = document.getElementById("modal");
-    console.log(form);
   }, 50);
 }; //sets element accessor values one second after the page loads so the DOM can create them first
