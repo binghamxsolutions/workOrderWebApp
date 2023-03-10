@@ -14,6 +14,7 @@ export class WorkOrdersComponent implements OnInit {
   statuses?: string[];
   workOrders?: WorkOrder[];
   technicians?: Technician[];
+  newOrder?: WorkOrder;
 
   constructor(private workOrderService: WorkOrderService, private technicianService: TechnicianService, private router: Router) { }
 
@@ -23,16 +24,25 @@ export class WorkOrdersComponent implements OnInit {
    * return empty due the the page load order
   */
   ngOnInit(): void {
-    this.getWorkOrders();
+    this.getOpenWorkOrders();
     this.getTechnicians();
     this.getStatusList();
+  }
+
+
+  getAllWorkOrders(): void {
+    this.workOrderService.getWorkOrders().subscribe(workOrders => {
+      if (workOrders.length > 0) {
+        this.workOrders = workOrders;
+      }
+    });
   }
 
   /** 
    * Generates a list of work orders from a table if records are available
    */
-  getWorkOrders(): void {
-    this.workOrderService.getWorkOrders().subscribe(workOrders => {
+  getOpenWorkOrders(): void {
+    this.workOrderService.getFilteredWorkOrders("Assigned").subscribe(workOrders => {
       if (workOrders.length > 0) { 
         this.workOrders = workOrders;
       }

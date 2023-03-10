@@ -7,9 +7,9 @@
     <div id="actions">
       <div id="user-action">
         <div class="user-interactive">
-          <select class="action-buttons" id="filter" name="filter" onchange="colorFilter()">
+          <select class="action-buttons" id="filter" name="filter">
             <option value="none" selected disabled hidden>Status Filter</option>
-            <option value="" (click)="getWorkOrders()">All</option>
+            <option value="" (click)="getAllWorkOrders()">All</option>
             <option *ngFor="let status of statuses" value="{{status}}" (click)="getFilteredWorkOrders(status)">{{status}}</option>
           </select>
         </div>
@@ -23,30 +23,32 @@
             <form>
               <div class="input-field text">
                 <label for="contactName">Name: </label>
-                <input type="text" name="contactName" id="contactName" autofocus>
+                <input type="text" name="contactName" id="contactName" autofocus><!-- [(ngModel)]="newOrder.contactName" -->
               </div>
 
               <div class="input-field text">
                 <label for="email">Email: </label>
-                <input type="text" name="email" id="email">
+                <input type="text" name="email" id="email"> <!-- [(ngModel)]="newOrder.email" -->
               </div>
 
               <div class="input-field text">
                 <label for="contactNumber">Phone Number: </label>
-                <input type="text" name="contactNumber" id="contactNumber">
+                <input type="text" name="contactNumber" id="contactNumber"> <!-- [(ngModel)]="newOrder.contactNumber" -->
               </div>
 
               <div class="input-field drop-down">
                 <label for="technicians">Technician: </label>
                 <select name="technicians" id="technicians">
-                  <option value="default" disabled selected>None selected</option>
+                  <!-- [(ngModel)]="newOrder.technicianId" -->
+
+                  <option value="default" disabled selected hidden>None selected</option>
                   <option *ngFor="let tech of technicians" value="{{tech.technicianId}}">{{tech.technicianName}}</option>
                 </select>
               </div>
 
               <div class="input-field message">
                 <label for="problem">Problem: </label>
-                <textarea name="problem" id="problem" rows="7" cols="35"></textarea>
+                <textarea name="problem" id="problem" rows="7" cols="35"></textarea> <!-- [(ngModel)]="newOrder.problem" -->
               </div>
 
               <div id="form-btns">

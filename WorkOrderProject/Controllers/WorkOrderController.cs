@@ -57,10 +57,10 @@ namespace WorkOrderProject.Controllers
 
         
         [HttpGet(Name = "GetWorkOrders")] //sets the web app uri for GET methods
-        public Dictionary<int, string> GetWorkOrders(int id)
+        public WorkOrder[] GetWorkOrders(int id)
         {
             DbConnection connection = new();
-            Dictionary<int, string> orders = connection.ReadWorkOrderStatuses(id);
+            WorkOrder[] orders = connection.ReadWorkOrderStatuses(id);
 
             return orders;
         }

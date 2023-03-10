@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { WorkOrder } from './work-order';
+import { Result } from './result';
 
 @Injectable({
   providedIn: 'root'
@@ -41,9 +42,9 @@ export class WorkOrderService {
     );
   }
 
-  getTechFilteredWorkOrders(id: number): Observable<Record<number,string>[]> {
-    return this.http.get<Record<number, string>[]>(this.base + "workorder/getworkorders?id=" + id).pipe(
-      catchError(this.handleError<Record<number, string>[]>('getTechFilteredWorkOrders'))
+  getTechFilteredWorkOrders(id: number): Observable<WorkOrder[]> {
+    return this.http.get<WorkOrder[]>(this.base + "workorder/getworkorders?id=" + id).pipe(
+      catchError(this.handleError<WorkOrder[]>('getTechFilteredWorkOrders'))
     );
   }
 

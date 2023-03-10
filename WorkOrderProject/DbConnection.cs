@@ -87,7 +87,7 @@ namespace WorkOrderProject
         {
             WorkOrder[] records;
             List<WorkOrder> workOrders = new();
-            sqlStatement = "SELECT * FROM workorders WHERE Status='" + status + "'";// + " ORDER BY DateReceived DESC";
+            sqlStatement = $"SELECT * FROM workorders WHERE Status='{status}'";// + " ORDER BY DateReceived DESC";
 
             cmd = new SqlCommand(sqlStatement, conn);
             dataReader = cmd.ExecuteReader();
@@ -113,11 +113,10 @@ namespace WorkOrderProject
         public List<string> ReadWorkOrderStatuses()
         {
             List<string> statuses = new();
-            sqlStatement = "SELECT DISTINCT Status FROM workOrders";
+            sqlStatement = "SELECT DISTINCT Status FROM workorders";
             cmd = new SqlCommand(sqlStatement, conn);
             dataReader = cmd.ExecuteReader();
 
-            cmd = new SqlCommand(sqlStatement, conn);
             while (dataReader.Read())
             {
                 statuses.Add(dataReader.GetString(0));
@@ -130,20 +129,24 @@ namespace WorkOrderProject
          * Queries the workOrders table for records that match the 
          * provided TechnicianId.
          */
-        public Dictionary<int, string> ReadWorkOrderStatuses(int id)
+        public WorkOrder[] ReadWorkOrderStatuses(int id)
         {
-            Dictionary<int, string> orders = new();
-            sqlStatement = "SELECT WONum, Status FROM workOrders WHERE TechnicianID='" + id + "'";
+            WorkOrder[] orders; 
+            List<WorkOrder> results = new();
+            sqlStatement = "Select * from workorders where status = 'Closed'";
             cmd = new SqlCommand(sqlStatement, conn);
             dataReader = cmd.ExecuteReader();
 
             while (dataReader.Read())
             {
-                KeyValuePair<int, string> temp = validateInfoColumns(dataReader);
-                //orders.Add(temp.Key, temp.Value);
+                WorkOrder temp = validateWorkOrderColumns(dataReader);
+                results.Add(temp);
             }
+            orders = results.ToArray();
+            cmd.Dispose();
+            dataReader.Close();
+            conn.Close();
 
-            orders.Add(12, "sup");
             return orders;
         }
         
@@ -153,11 +156,10 @@ namespace WorkOrderProject
         public WorkOrder ReadWorkOrderRecord(int woId)
         {
             WorkOrder record;
-            sqlStatement = "SELECT * FROM workOrders WHERE WoNum='" + woId +"'";
+            sqlStatement = $"SELECT * FROM workOrders WHERE WoNum='{woId}'";
             cmd = new SqlCommand(sqlStatement, conn);
             dataReader = cmd.ExecuteReader();
 
-            cmd = new SqlCommand(sqlStatement, conn);
             dataReader.Read();
             record = validateWorkOrderColumns(dataReader);
 
@@ -181,7 +183,6 @@ namespace WorkOrderProject
             cmd = new SqlCommand(sqlStatement, conn);
             dataReader = cmd.ExecuteReader();
 
-            cmd = new SqlCommand(sqlStatement, conn);
             while (dataReader.Read())
             {
                 Technician temp = new()
@@ -205,25 +206,27 @@ namespace WorkOrderProject
          * Queries the technicians table for the id's and 
          * names of the table members
          */
-        public Dictionary<int, string> ReadTechnicianList()
+        /*public Result[] ReadTechnicianList()
         {
-            Dictionary<int, string> technicians = new();
+            Result[] technicians;
+            List<Result> results = new();
             sqlStatement = "SELECT TechnicianId, TechnicianName FROM technicians";
             cmd = new SqlCommand(sqlStatement, conn);
             dataReader = cmd.ExecuteReader();
 
             while (dataReader.Read())
             {
-                KeyValuePair<int, string> temp = validateInfoColumns(dataReader);
-                technicians.Add(temp.Key, temp.Value);
+                Result temp = validateInfoColumns(dataReader);
+                results.Add(temp);
             }
+            technicians = results.ToArray();
 
             cmd.Dispose();
             dataReader.Close();
             conn.Close();
 
             return technicians;
-        }
+        }*/
 
         /**
          * Queries the technician table for the record that
@@ -349,10 +352,9 @@ namespace WorkOrderProject
          * Verifies if the id and value columns are non-nullable before
          * assigning their respective fields values.
          */
-        private KeyValuePair<int, string> validateInfoColumns(SqlDataReader dataReader)
+        private WorkOrder validateInfoColumns(SqlDataReader dataReader)
         {
-            int key = 0;
-            string value = "";
+            WorkOrder temp = new();
 
             for (int i = 0; i < 2; i++)
             {
@@ -361,22 +363,18 @@ namespace WorkOrderProject
                 {
                     case 0:
                         if (!isNull) { 
-                            key = dataReader.GetInt32(i); 
+                            temp.WoNum = dataReader.GetInt32(i); 
                         } // no else statement required as id fields are required
 
                         break;
                     case 1:
                         if (!isNull) {
-                            value = dataReader.GetString(i);
+                            temp.Status = dataReader.GetString(i);
                         } // no else statement required as the default assignment for value is an empty string
 
                         break;
                 }
             }
-            //KeyValuePair<int, string> temp = new (key, value);
-            //Debug.WriteLine(temp);
-
-            KeyValuePair<int, string> temp = new(1, "hi");
             return temp;
         }
     }

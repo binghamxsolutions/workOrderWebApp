@@ -5,6 +5,7 @@ import { Technician } from '../technician';
 import { WorkOrder } from '../work-order';
 import { WorkOrderService } from '../work-order.service';
 import { Router } from '@angular/router';
+import { Result } from '../result';
 
 @Component({
   selector: 'app-technician-detail',
@@ -15,7 +16,7 @@ import { Router } from '@angular/router';
 export class TechnicianDetailComponent implements OnInit {
   id: number;
   technician?: Technician;
-  workOrders?: Record<number, string>[];
+  workOrders?: WorkOrder[];
 
   constructor(private router: Router, private route: ActivatedRoute, private technicianService: TechnicianService, private workOrderService: WorkOrderService) {
     this.id = Number(this.route.snapshot.paramMap.get('id'));
@@ -36,7 +37,7 @@ export class TechnicianDetailComponent implements OnInit {
   */
   getTechnician(): void {
     this.technicianService.getTechnician(this.id).subscribe(technician => {
-      if (technician) {
+      if (technician.technicianId != 0) { // checks the return value to ensure the tech exists
         this.technician = technician;
       } else {
         this.error404();
@@ -45,7 +46,11 @@ export class TechnicianDetailComponent implements OnInit {
   }
 
   getWorkOrders(): void {
-    this.workOrderService.getTechFilteredWorkOrders(this.id).subscribe(workOrders => { console.log("results: " + workOrders); });// this.workOrders = workOrders });
+    this.workOrderService.getTechFilteredWorkOrders(this.id).subscribe(workOrders => {
+      if (workOrders.length > 0) {
+        this.workOrders = workOrders;
+      }
+    });
   }
 
   /**

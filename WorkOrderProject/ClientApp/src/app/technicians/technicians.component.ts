@@ -3,7 +3,6 @@ import { TechnicianService } from '../technician.service';
 import { Technician } from '../technician';
 import { Router } from '@angular/router';
 
-
 @Component({
   selector: 'app-technicians',
   templateUrl: './technicians.component.html',
