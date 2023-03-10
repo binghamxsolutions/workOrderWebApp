@@ -125,33 +125,29 @@ namespace WorkOrderProject
             return statuses;
         }
         
-        /**
-         * Queries the workOrders table for records that match the 
-         * provided TechnicianId.
-         */
-        public WorkOrder[] ReadWorkOrderStatuses(int id)
+        public WorkOrder[] ReadTechWorkOrders(int id)
         {
-            WorkOrder[] orders; 
-            List<WorkOrder> results = new();
-            sqlStatement = "Select * from workorders where status = 'Closed'";
-            cmd = new SqlCommand(sqlStatement, conn);
+            WorkOrder[] records;
+            List<WorkOrder> workOrders = new();
+            sqlStatement = $"SELECT WONum, Status FROM workorders WHERE TechnicianID={id}";
+            cmd= new SqlCommand(sqlStatement, conn); 
             dataReader = cmd.ExecuteReader();
 
-            while (dataReader.Read())
-            {
-                WorkOrder temp = validateWorkOrderColumns(dataReader);
-                results.Add(temp);
+            while (dataReader.Read()) {
+                WorkOrder temp = validateInfoColumns(dataReader);
+                workOrders.Add(temp);
             }
-            orders = results.ToArray();
-            cmd.Dispose();
+            records = workOrders.ToArray();
+
             dataReader.Close();
+            cmd.Dispose();
             conn.Close();
 
-            return orders;
+            return records;
         }
-        
         /**
-         * 
+         * Queries the workorders table for a specific work order
+         * by searching for its work order ID
          */
         public WorkOrder ReadWorkOrderRecord(int woId)
         {

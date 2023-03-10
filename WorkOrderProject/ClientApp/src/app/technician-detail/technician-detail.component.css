@@ -4,7 +4,7 @@
 
 /* grid styles */
 .tech-info, .work-order-card,
-#empty-order-list {display: grid;}
+#empty-order-list, #tech-orders {display: grid;}
 .tech-info {
   width: 70vw;
   grid-auto-flow: row;
@@ -49,6 +49,7 @@ h2 {text-align: left;}
     .work-order-status {
       background-color: #aaa;
       margin: 0px;
+      word-wrap: anywhere;
     }
     .header {
       text-align: center;

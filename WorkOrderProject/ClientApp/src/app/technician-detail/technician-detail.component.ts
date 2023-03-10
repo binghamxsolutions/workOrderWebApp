@@ -28,7 +28,7 @@ export class TechnicianDetailComponent implements OnInit {
   */
   ngOnInit(): void {
     this.getTechnician();
-    this.getWorkOrders();
+    this.getTechOrders();
   }
 
   /**
@@ -45,12 +45,19 @@ export class TechnicianDetailComponent implements OnInit {
     });
   }
 
-  getWorkOrders(): void {
-    this.workOrderService.getTechFilteredWorkOrders(this.id).subscribe(workOrders => {
+  /**
+   * Populates a list of work orders assigned to the technician if
+   * they exist.
+   */
+  getTechOrders(): void {
+    this.workOrderService.getTechOrders(this.id).subscribe(workOrders => {
+      console.log(workOrders);
       if (workOrders.length > 0) {
-        this.workOrders = workOrders;
+      this.workOrders = workOrders;
+
       }
-    });
+    }
+    );
   }
 
   /**

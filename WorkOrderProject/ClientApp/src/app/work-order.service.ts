@@ -42,12 +42,17 @@ export class WorkOrderService {
     );
   }
 
-  getTechFilteredWorkOrders(id: number): Observable<WorkOrder[]> {
-    return this.http.get<WorkOrder[]>(this.base + "workorder/getworkorders?id=" + id).pipe(
-      catchError(this.handleError<WorkOrder[]>('getTechFilteredWorkOrders'))
+  getTechOrders(id: number): Observable<WorkOrder[]> {
+    return this.http.get<WorkOrder[]>(this.base + "workorder/gettechorders?id=" + id).pipe(
+      catchError(this.handleError<WorkOrder[]>('getTechOrders', []))
     );
   }
 
+  /**
+   * Retrieves a list of work order statuses
+   * available in the database
+   * @returns A string array of values if any are present
+   */
   getStatuses(): Observable<string[]> {
     return this.http.get<string[]>(this.base + "workorder/getstatuses").pipe(
       catchError(this.handleError<string[]>('getStatuses', []))
@@ -66,7 +71,8 @@ export class WorkOrderService {
   }
 
   /**
-   * 
+   * Handles errors from back-end requests to allow the app to still
+   * run without crashing
    * @param operation
    * @param result
    * @returns

@@ -13,7 +13,7 @@
 
     <div class="tech-info" id="work-orders">
       <h2>Work Orders</h2>
-      <div *ngIf="workOrders">
+      <div id="tech-orders" *ngIf="workOrders">
         <table>
           <tr class="work-order-card header"><th>W.O. #</th><th>Status</th></tr>
           <tr *ngFor="let workOrder of workOrders" class="work-order-card"><td class="work-order-id"><a routerLink="/orders/order/{{workOrder.woNum}}">{{workOrder.woNum}}</a></td><td class="work-order-status">{{workOrder.status}}</td></tr>

@@ -8,16 +8,11 @@ a {text-decoration: none;}
 #tech-list, #techs, .tech-card, .tech-name {display: grid;}
 
 #tech-list, #techs {justify-content: center;}
-#techs {
-    grid-template-columns: repeat(auto-fit, 350px);
-    row-gap: 30px;
-    column-gap: 15px;
-}
+#techs {row-gap: 30px;}
 
 /* tech contact card styles */
 .tech-card {
   grid-template-columns: 30% 70%;
-  width: 350px;
   align-content: center;
   border-radius: 25px;
   filter: drop-shadow(1px 1px 3px #000);

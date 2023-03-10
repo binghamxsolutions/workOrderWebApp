@@ -55,15 +55,15 @@ namespace WorkOrderProject.Controllers
             return statuses;
         }
 
-        
-        [HttpGet(Name = "GetWorkOrders")] //sets the web app uri for GET methods
-        public WorkOrder[] GetWorkOrders(int id)
+        [HttpGet("GetTechOrders")]
+        public WorkOrder[] GetTechOrders(int id)
         {
             DbConnection connection = new();
-            WorkOrder[] orders = connection.ReadWorkOrderStatuses(id);
+            WorkOrder[] workOrders = connection.ReadTechWorkOrders(id);
 
-            return orders;
+            return workOrders;
         }
+
 
 
         [HttpPost] //sets the web app uri for POST methods

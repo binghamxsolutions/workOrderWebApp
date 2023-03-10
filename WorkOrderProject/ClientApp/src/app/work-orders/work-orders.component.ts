@@ -29,6 +29,9 @@ export class WorkOrdersComponent implements OnInit {
     this.getStatusList();
   }
 
+  /**
+   * Generates a list of all work orders from a table if records are available
+   */
 
   getAllWorkOrders(): void {
     this.workOrderService.getWorkOrders().subscribe(workOrders => {
@@ -39,7 +42,7 @@ export class WorkOrdersComponent implements OnInit {
   }
 
   /** 
-   * Generates a list of work orders from a table if records are available
+   * Generates a list of open work orders from a table if records are available
    */
   getOpenWorkOrders(): void {
     this.workOrderService.getFilteredWorkOrders("Assigned").subscribe(workOrders => {
