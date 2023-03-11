@@ -19,6 +19,10 @@ namespace WorkOrderProject.Controllers
             _logger = logger;
         }
         
+        /// <summary>
+        /// Produces all work orders available in a database
+        /// </summary>
+        /// <returns>An array of <c>WorkOrder</c>s</returns>
         [HttpGet("GetWorkOrders")] //sets the web app uri for GET methods
         public WorkOrder[] Get()
         {
@@ -28,7 +32,13 @@ namespace WorkOrderProject.Controllers
             return orders;
         }
 
-        [HttpGet("GetWorkOrdersByStatus")] //sets the web app uri for GET methods
+        /// <summary>
+        /// Produces a list of work orders based on their status
+        /// </summary>
+        /// <param name="status">The status used to query the database and filter
+        /// the results</param>
+        /// <returns>An array of <c>WorkOrder</c>s</returns>
+        [HttpGet("GetWorkOrdersByStatus")]
         public WorkOrder[] Get(string status)
         {
             DbConnection connection = new();
@@ -37,7 +47,12 @@ namespace WorkOrderProject.Controllers
             return orders;
         } 
 
-        [HttpGet("GetWorkOrder")] //sets the web app uri for GET methods
+        /// <summary>
+        /// Queries a database for a specific work order
+        /// </summary>
+        /// <param name="id">The unique ID assigned to the work order</param>
+        /// <returns>A <c>WorkOrder</c> object</returns>
+        [HttpGet("GetWorkOrder")] 
         public WorkOrder Get(int id)
         {
             DbConnection connection = new();
@@ -46,15 +61,25 @@ namespace WorkOrderProject.Controllers
             return order;
         }
 
-        [HttpGet("GetStatuses")] //sets the web app uri for GET methods
-        public List<String> GetStatuses()
+        /// <summary>
+        /// Queries a database for possible work order statuses
+        /// </summary>
+        /// <returns>A <c>List</c> of type <c>string</c></returns>
+        [HttpGet("GetStatuses")]
+        public List<string> GetStatuses()
         {
             DbConnection connection = new();
-            List<String> statuses = connection.ReadWorkOrderStatuses();
+            List<string> statuses = connection.ReadWorkOrderStatuses();
 
             return statuses;
         }
 
+        /// <summary>
+        /// Produces an array of work order items completed by a 
+        /// technician given their technician ID
+        /// </summary>
+        /// <param name="id">The technician's ID number</param>
+        /// <returns>An array of <c>WorkOrder</c>s</returns> 
         [HttpGet("GetTechOrders")]
         public WorkOrder[] GetTechOrders(int id)
         {
@@ -65,12 +90,24 @@ namespace WorkOrderProject.Controllers
         }
 
 
-
-        [HttpPost] //sets the web app uri for POST methods
-        public void Post()
+        /// <summary>
+        /// Creates a new work order. 
+        /// </summary>
+        /// <param name="newOrder">A <c>WorkOrder</c> object with work order specifics</param>
+        [HttpPost("CreateNewOrder")] //sets the web app uri for POST methods
+        public void Post(WorkOrder newOrder)
         {
-            //return new WorkOrder();
-            //TODO correct code properly for POST method
+            DbConnection connection = new DbConnection();
+            connection.CreateWorkOrder(newOrder);
+        }
+
+        [HttpGet("SetWorkOrderNumber")]
+        public int SetWorkOrderNumber()
+        {
+            DbConnection connection = new DbConnection();
+            int newWONum = connection.SetWONum();
+
+            return newWONum;
         }
     }
 }

@@ -4,6 +4,7 @@ import { WorkOrder } from '../work-order';
 import { Router } from '@angular/router';
 import { TechnicianService } from '../technician.service';
 import { Technician } from '../technician';
+import { FormsModule, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-work-orders',
@@ -14,9 +15,21 @@ export class WorkOrdersComponent implements OnInit {
   statuses?: string[];
   workOrders?: WorkOrder[];
   technicians?: Technician[];
-  newOrder?: WorkOrder;
+  newOrderForm = this.formBuilder.group({
+    woNum: <number|null>(null),
+    contactName: <string | null>(null),
+    email: <string | null>(null),
+    contactNumber: <string | null>(null),
+    dateReceived: <Date | null>(null),
+    technicianId: <number | null>(null),
+    dateAssigned: <Date | null>(null),
+    problem: <string | null>(null),
+    status: <string | null>(null),
+    dateComplete: <Date | null>(null),
+    techComments: <string | null>(null)
+  });
 
-  constructor(private workOrderService: WorkOrderService, private technicianService: TechnicianService, private router: Router) { }
+  constructor(private workOrderService: WorkOrderService, private technicianService: TechnicianService, private router: Router, private formBuilder: FormBuilder, private rfm: ReactiveFormsModule) { }
 
   /**
    * Calls the getWorkOrders, getTechnicians, and getStatusList
@@ -32,7 +45,6 @@ export class WorkOrdersComponent implements OnInit {
   /**
    * Generates a list of all work orders from a table if records are available
    */
-
   getAllWorkOrders(): void {
     this.workOrderService.getWorkOrders().subscribe(workOrders => {
       if (workOrders.length > 0) {
@@ -84,7 +96,33 @@ export class WorkOrdersComponent implements OnInit {
   /**
    * This method updates the workorder table by adding a new record
    */
-  addWorkOrder(): void { } //TODO
+  addWorkOrder() {
+    // TODO  get new workorder number thru wo-service
+    var current_time = new Date(); // captures current time
+
+    this.newOrderForm.controls.dateReceived.setValue(current_time);
+    this.newOrderForm.controls.status.setValue("Assigned");
+    //sets expected values for the work order's status and date received values 
+
+    if ((this.newOrderForm.controls.technicianId.value !== null)) {
+      this.newOrderForm.controls.dateAssigned.setValue(current_time);
+    }  //sets the assigned date if and only a technicina has been set
+
+    this.getNewWONum();
+    // helps set the new wo number since scoping issues will not allow property assignment
+  }
+
+  /**
+   * Produces a new work order number to assign to a newly created
+   * work order and then submits it
+   */
+  getNewWONum() {
+    this.workOrderService.getNewWONum().subscribe( woNum =>
+    {
+      this.newOrderForm.controls.woNum.setValue(woNum);
+      this.workOrderService.createWorkOrder(this.newOrderForm.value as WorkOrder);
+   });
+  } 
 
   /**
    * Returns a list of available statuses present in the workOrders

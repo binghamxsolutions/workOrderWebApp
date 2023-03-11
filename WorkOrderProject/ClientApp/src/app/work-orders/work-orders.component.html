@@ -20,25 +20,25 @@
             <!-- try onfocus set [contactName].addAttribute("autofocus") and onblur set [contactName].removeAttribute("autofocus") -->
             <h1>Create a New Work Order</h1>
 
-            <form>
+            <form [formGroup]="newOrderForm" (ngSubmit)="addWorkOrder()">
               <div class="input-field text">
                 <label for="contactName">Name: </label>
-                <input type="text" name="contactName" id="contactName" autofocus><!-- [(ngModel)]="newOrder.contactName" -->
+                <input type="text" name="contactName" id="contactName" autofocus formControlName="contactName"><!-- [(ngModel)]="newOrder.contactName" -->
               </div>
 
               <div class="input-field text">
                 <label for="email">Email: </label>
-                <input type="text" name="email" id="email"> <!-- [(ngModel)]="newOrder.email" -->
+                <input type="text" name="email" id="email" formControlName="email"> <!-- [(ngModel)]="newOrder.email" -->
               </div>
 
               <div class="input-field text">
                 <label for="contactNumber">Phone Number: </label>
-                <input type="text" name="contactNumber" id="contactNumber"> <!-- [(ngModel)]="newOrder.contactNumber" -->
+                <input type="text" name="contactNumber" id="contactNumber" formControlName="contactNumber"> <!-- [(ngModel)]="newOrder.contactNumber" -->
               </div>
 
               <div class="input-field drop-down">
                 <label for="technicians">Technician: </label>
-                <select name="technicians" id="technicians">
+                <select name="technicians" id="technicians" formControlName="technicianId">
                   <!-- [(ngModel)]="newOrder.technicianId" -->
 
                   <option value="default" disabled selected hidden>None selected</option>
@@ -48,14 +48,13 @@
 
               <div class="input-field message">
                 <label for="problem">Problem: </label>
-                <textarea name="problem" id="problem" rows="7" cols="35"></textarea> <!-- [(ngModel)]="newOrder.problem" -->
+                <textarea name="problem" id="problem" rows="7" cols="35" formControlName="problem"></textarea> <!-- formControlName="problem" [(ngModel)]="newOrder.problem" -->
               </div>
 
               <div id="form-btns">
                 <input class="action-buttons" id="cancel-btn" type="reset" value="Cancel" onclick="closeOrderForm()">
-                <button class="action-buttons" type="submit" (click)=null>Create</button> <!-- verify that the default tech value isn't selected before submission else throw error -->
+                <button class="action-buttons" type="submit">Create</button> <!-- verify that the default tech value isn't selected before submission else throw error -->
               </div>
-
             </form>
           </div>
 

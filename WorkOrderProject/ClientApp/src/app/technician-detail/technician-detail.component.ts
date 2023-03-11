@@ -53,8 +53,7 @@ export class TechnicianDetailComponent implements OnInit {
     this.workOrderService.getTechOrders(this.id).subscribe(workOrders => {
       console.log(workOrders);
       if (workOrders.length > 0) {
-      this.workOrders = workOrders;
-
+        this.workOrders = workOrders;
       }
     }
     );

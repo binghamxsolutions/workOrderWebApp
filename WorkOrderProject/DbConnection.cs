@@ -7,6 +7,11 @@ using WorkOrderProject.Models;
 
 namespace WorkOrderProject
 {
+    /// <summary>
+    /// Creates a connection to a database and presents 
+    /// several types of queries to the database for retrieval or
+    /// manipulation by the controller
+    /// </summary>
     public class DbConnection
     {
         string connectionString;
@@ -27,8 +32,58 @@ namespace WorkOrderProject
         // Create methods
         public void CreateWorkOrder(WorkOrder workOrder)
         {
-            // TODO  iteration thru the object to properly format the <values>
-            sqlStatement = "INSERT INTO workorder" + "<order_values>";
+            string columns = "WONum"; //starting point for column values since wonum is required
+            string values = $"{workOrder.WoNum}"; 
+            // TODO create a parallel list of values to insert into the table ie: string values = "'<wo_num>', 3, 'Jan 23, 2023', '<other_value>'";
+           
+            if (workOrder.ContactName != null)
+            {
+                columns += ",ContactName";
+                values += $"{workOrder.ContactName}";
+
+            }
+            if (workOrder.ContactNumber != null)
+            {
+                columns += ",ContactNumber";
+                values += $"{workOrder.ContactNumber}";
+
+            }
+            if (workOrder.Email != null)
+            {
+                columns += ",Email";
+                values += $"{workOrder.Email}";
+
+            }
+            if (workOrder.DateReceived != null)
+            {
+                columns += ",DateReceived";
+                values += $"{workOrder.DateReceived}";
+
+            }
+            if (workOrder.Problem != null)
+            {
+                columns += ",Problem";
+                values += $"{workOrder.Problem}";
+
+            }
+            if (workOrder.DateAssigned != null)
+            {
+                columns += ",DateAssigned";
+                values += $"{workOrder.DateAssigned}";
+            }
+            if (workOrder.TechnicianId != null)
+            {
+                columns += ",TechnicianID";
+                values += $"{workOrder.TechnicianId}";
+            }
+            if (workOrder.Status != null)
+            {
+                columns += ",Status";
+                values += ",'{workOrder.Status}'";
+            }
+           
+
+            sqlStatement = $"INSERT {columns} INTO workorders {values}";
             cmd = new SqlCommand(sqlStatement, conn);
             dataReader = cmd.ExecuteReader();
 
@@ -125,6 +180,11 @@ namespace WorkOrderProject
             return statuses;
         }
         
+
+        /**
+         * Queries the workOrders table for the work order number and status
+         * of any records that have been assigned to a specific technician
+         */
         public WorkOrder[] ReadTechWorkOrders(int id)
         {
             WorkOrder[] records;
@@ -199,32 +259,6 @@ namespace WorkOrderProject
         }
 
         /**
-         * Queries the technicians table for the id's and 
-         * names of the table members
-         */
-        /*public Result[] ReadTechnicianList()
-        {
-            Result[] technicians;
-            List<Result> results = new();
-            sqlStatement = "SELECT TechnicianId, TechnicianName FROM technicians";
-            cmd = new SqlCommand(sqlStatement, conn);
-            dataReader = cmd.ExecuteReader();
-
-            while (dataReader.Read())
-            {
-                Result temp = validateInfoColumns(dataReader);
-                results.Add(temp);
-            }
-            technicians = results.ToArray();
-
-            cmd.Dispose();
-            dataReader.Close();
-            conn.Close();
-
-            return technicians;
-        }*/
-
-        /**
          * Queries the technician table for the record that
          * matches the TechnicianId
          */
@@ -258,6 +292,28 @@ namespace WorkOrderProject
 
         // Update method NOTE: this method is empty for future iterations with more CRUD operations
         public void Update(string table, string columnName, string condition) { }
+
+
+        public int SetWONum() {
+            int newWONum = 0;
+            string sqlStatement = "SELECT ISNULL(MAX(WONum + 1), 1) FROM workorders";
+            cmd = new SqlCommand(sqlStatement, conn);
+            dataReader = cmd.ExecuteReader();
+
+            while (dataReader.Read()) { 
+                if (!dataReader.IsDBNull(0))
+                {
+                    newWONum = dataReader.GetInt32(0);
+                }
+            }
+
+            conn.Close();
+            cmd.Dispose();
+            dataReader.Close();
+
+            return newWONum; 
+        }
+
 
         /**
          * Verifies if the columns of the workOrders table listed in 

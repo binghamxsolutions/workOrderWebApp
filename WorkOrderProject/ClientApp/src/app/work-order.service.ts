@@ -70,6 +70,16 @@ export class WorkOrderService {
     );
   }
 
+  createWorkOrder(workOrder: WorkOrder): void {
+    this.http.post<WorkOrder>(this.base + 'workorder/createneworder?newOrder=' + workOrder, this.httpOptions);
+  }
+
+  getNewWONum(): Observable<number> {
+    return this.http.get<number>(this.base + 'workorder/setworkordernumber', this.httpOptions).pipe(
+      catchError(this.handleError<number>('getNewWONum'))
+    );
+  }
+
   /**
    * Handles errors from back-end requests to allow the app to still
    * run without crashing
