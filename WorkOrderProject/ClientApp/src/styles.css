@@ -13,24 +13,8 @@
   /*accents*/
   --paleBlue: #DFE3E4;
   --midnight: #0C1315;
-}
-/*set global color styles*/
+} /* set global color styles */
 
-/* Provide sufficient contrast against white background */
-a {
-  color: #0366d6;
-}
-
-code {
-  color: #e01a76;
-}
-
-.btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
-}
-/* DELTE ME AFTER PROJECT IS BUILT*/
 html, body, app-root {
   min-height: 100vh;
 } /* fills the entire viewport even if the content is insufficient to fill it */

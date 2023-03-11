@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.EntityFrameworkCore.Query;
 using System;
+using System.Data.SqlTypes;
 using System.Diagnostics;
 using WorkOrderProject.Models;
 
@@ -26,7 +27,7 @@ namespace WorkOrderProject
             conn = new SqlConnection(connectionString);
 
             conn.Open();
-            //Console.WriteLine(conn.State);
+            Console.WriteLine(conn.State);
         }
 
         // Create methods
@@ -34,47 +35,48 @@ namespace WorkOrderProject
         {
             string columns = "WONum"; //starting point for column values since wonum is required
             string values = $"{workOrder.WoNum}"; 
-            // TODO create a parallel list of values to insert into the table ie: string values = "'<wo_num>', 3, 'Jan 23, 2023', '<other_value>'";
            
             if (workOrder.ContactName != null)
             {
                 columns += ",ContactName";
-                values += $"{workOrder.ContactName}";
+                values += $",'{workOrder.ContactName}'";
 
             }
             if (workOrder.ContactNumber != null)
             {
                 columns += ",ContactNumber";
-                values += $"{workOrder.ContactNumber}";
+                values += $",'{workOrder.ContactNumber}'";
 
             }
             if (workOrder.Email != null)
             {
                 columns += ",Email";
-                values += $"{workOrder.Email}";
+                values += $",'{workOrder.Email}'";
 
             }
             if (workOrder.DateReceived != null)
             {
+                SqlDateTime sdt = (SqlDateTime)workOrder.DateReceived;
                 columns += ",DateReceived";
-                values += $"{workOrder.DateReceived}";
+                values += $",'{sdt}'";
 
             }
             if (workOrder.Problem != null)
             {
                 columns += ",Problem";
-                values += $"{workOrder.Problem}";
+                values += $",'{workOrder.Problem}'";
 
             }
             if (workOrder.DateAssigned != null)
             {
+                SqlDateTime sdt = (SqlDateTime)workOrder.DateAssigned;
                 columns += ",DateAssigned";
-                values += $"{workOrder.DateAssigned}";
+                values += $",'{sdt}'";
             }
             if (workOrder.TechnicianId != null)
             {
                 columns += ",TechnicianID";
-                values += $"{workOrder.TechnicianId}";
+                values += $",{workOrder.TechnicianId}";
             }
             if (workOrder.Status != null)
             {
@@ -83,10 +85,10 @@ namespace WorkOrderProject
             }
            
 
-            sqlStatement = $"INSERT {columns} INTO workorders {values}";
+            sqlStatement = $"INSERT INTO workorders ({columns}) VALUES {values}";
             cmd = new SqlCommand(sqlStatement, conn);
             dataReader = cmd.ExecuteReader();
-
+            Console.WriteLine(sqlStatement);
 
             dataReader.Close();
             cmd.Dispose();
@@ -294,9 +296,14 @@ namespace WorkOrderProject
         public void Update(string table, string columnName, string condition) { }
 
 
+        /**
+         * Generates a new work order number based on the highest
+         * value available in the workorders table
+         */
         public int SetWONum() {
             int newWONum = 0;
             string sqlStatement = "SELECT ISNULL(MAX(WONum + 1), 1) FROM workorders";
+            // sets the default work order number to 1 if there are no orders available
             cmd = new SqlCommand(sqlStatement, conn);
             dataReader = cmd.ExecuteReader();
 

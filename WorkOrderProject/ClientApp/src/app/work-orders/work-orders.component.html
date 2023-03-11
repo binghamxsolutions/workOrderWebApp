@@ -1,4 +1,3 @@
-<!-- <script src="app/work-orders/work-orders-script.js" type="text/javascript" defer></script> -->
 <section class="parent-container">
   <div id="work-orders">
     <h1>Work Orders</h1>
@@ -23,23 +22,22 @@
             <form [formGroup]="newOrderForm" (ngSubmit)="addWorkOrder()">
               <div class="input-field text">
                 <label for="contactName">Name: </label>
-                <input type="text" name="contactName" id="contactName" autofocus formControlName="contactName"><!-- [(ngModel)]="newOrder.contactName" -->
+                <input type="text" name="contactName" id="contactName" formControlName="contactName">
               </div>
 
               <div class="input-field text">
-                <label for="email">Email: </label>
-                <input type="text" name="email" id="email" formControlName="email"> <!-- [(ngModel)]="newOrder.email" -->
+                <label for="email">E-mail: </label>
+                <input type="email" name="email" id="email" formControlName="email" placeholder="jackie_doe@email.com">
               </div>
 
               <div class="input-field text">
                 <label for="contactNumber">Phone Number: </label>
-                <input type="text" name="contactNumber" id="contactNumber" formControlName="contactNumber"> <!-- [(ngModel)]="newOrder.contactNumber" -->
+                <input oninput="hyphenate()" type="tel" name="contactNumber" id="contactNumber" formControlName="contactNumber" placeholder="888-888-8888" />
               </div>
 
               <div class="input-field drop-down">
                 <label for="technicians">Technician: </label>
                 <select name="technicians" id="technicians" formControlName="technicianId">
-                  <!-- [(ngModel)]="newOrder.technicianId" -->
 
                   <option value="default" disabled selected hidden>None selected</option>
                   <option *ngFor="let tech of technicians" value="{{tech.technicianId}}">{{tech.technicianName}}</option>
@@ -48,17 +46,15 @@
 
               <div class="input-field message">
                 <label for="problem">Problem: </label>
-                <textarea name="problem" id="problem" rows="7" cols="35" formControlName="problem"></textarea> <!-- formControlName="problem" [(ngModel)]="newOrder.problem" -->
+                <textarea name="problem" id="problem" rows="7" cols="35" formControlName="problem"></textarea>
               </div>
 
               <div id="form-btns">
                 <input class="action-buttons" id="cancel-btn" type="reset" value="Cancel" onclick="closeOrderForm()">
-                <button class="action-buttons" type="submit">Create</button> <!-- verify that the default tech value isn't selected before submission else throw error -->
+                <button class="action-buttons" type="submit">Create</button>
               </div>
             </form>
           </div>
-
-
         </div>
       </div>
     </div>

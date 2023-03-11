@@ -1,5 +1,6 @@
 let subMenu;
 let form;
+let contactField;
 
 /**
  * Opens the sub-menu when in mobile view
@@ -22,6 +23,20 @@ function closeSubMenu() {
 function openOrderForm() {
   form = document.getElementById("modal");
   form.style.display = "grid";
+
+  contactField = document.getElementById("contactName");
+  contactField.focus(); // adds focus to the first field
+}
+
+/**
+ * Adds a hyphen to the tel input for uniform formatting
+ */
+function hyphenate() {
+  telField = document.getElementById("contactNumber");
+
+  if (telField.value.length == 3 || telField.value.length == 7) {
+    telField.value += "-";
+  }
 }
 
 /**
@@ -29,6 +44,7 @@ function openOrderForm() {
  */
 function closeOrderForm() {
   form.scrollTo(0, 0);
+  contactField.blur();
   // ensures the form goes back to the top before closing
   form.style.display = "none";
 }

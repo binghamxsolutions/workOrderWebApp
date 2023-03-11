@@ -31,8 +31,7 @@ export class WorkOrderService {
   }
 
   /**
-   * Retrieves the filtered work order list from the database by matching the
-   * status
+   * Retrieves the filtered work order list from the database by matching the status.
    * @param techId This will be the filter for the returned list
    * @returns An `Obseverable` array of type `WorkOrder`
    */
@@ -42,6 +41,11 @@ export class WorkOrderService {
     );
   }
 
+  /**
+   * Retrieves a list of work orders assigned to a specific technician
+   * @param id
+   * @returns
+   */
   getTechOrders(id: number): Observable<WorkOrder[]> {
     return this.http.get<WorkOrder[]>(this.base + "workorder/gettechorders?id=" + id).pipe(
       catchError(this.handleError<WorkOrder[]>('getTechOrders', []))
@@ -49,8 +53,7 @@ export class WorkOrderService {
   }
 
   /**
-   * Retrieves a list of work order statuses
-   * available in the database
+   * Retrieves a list of work order statuses available in the database.
    * @returns A string array of values if any are present
    */
   getStatuses(): Observable<string[]> {
@@ -60,9 +63,9 @@ export class WorkOrderService {
   }
 
   /**
-   * 
-   * @param id Serves as a filter to aid with web app routing
-   * @returns 
+   * Produces a single record given an ID filter
+   * @param id An ID filter to identify the correct record
+   * @returns A single record of type [WorkOrder] if one matching the criteria is present
    */
   getWorkOrder(id: number): Observable<WorkOrder> {
     return this.http.get<WorkOrder>(this.base + 'workorder/getworkorder?id=' + id).pipe(
@@ -70,10 +73,21 @@ export class WorkOrderService {
     );
   }
 
+  /**
+   * Sends a new work order to an API to be added to the workorders database.
+   * @param workOrder
+   */
   createWorkOrder(workOrder: WorkOrder): void {
-    this.http.post<WorkOrder>(this.base + 'workorder/createneworder?newOrder=' + workOrder, this.httpOptions);
-  }
+    var postData = workOrder;
+    var headers = new HttpHeaders();
+    headers.set('Content-Type', 'application/x-www-form-urlencoded');
+    this.http.post<WorkOrder>(this.base + 'workorder/createneworder?newOrder=', postData, { headers: headers });
+  } //post info and headers solution from: https://stackoverflow.com/questions/54091284/asp-net-core-angular-7-http-post-requires-complex-object
 
+  /**
+   * Produces a new work order number 
+   * @returns A work order number
+   */
   getNewWONum(): Observable<number> {
     return this.http.get<number>(this.base + 'workorder/setworkordernumber', this.httpOptions).pipe(
       catchError(this.handleError<number>('getNewWONum'))
@@ -83,9 +97,9 @@ export class WorkOrderService {
   /**
    * Handles errors from back-end requests to allow the app to still
    * run without crashing
-   * @param operation
-   * @param result
-   * @returns
+   * @param operation The name of the operation that failed
+   * @param result An optional list of error results
+   * @returns A list of results if one was requested by the service
    */
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => { return of(result as T) };

@@ -95,10 +95,12 @@ namespace WorkOrderProject.Controllers
         /// </summary>
         /// <param name="newOrder">A <c>WorkOrder</c> object with work order specifics</param>
         [HttpPost("CreateNewOrder")] //sets the web app uri for POST methods
-        public void Post(WorkOrder newOrder)
+        public OkResult Post(WorkOrder newOrder)
         {
             DbConnection connection = new DbConnection();
             connection.CreateWorkOrder(newOrder);
+
+            return Ok();
         }
 
         [HttpGet("SetWorkOrderNumber")]

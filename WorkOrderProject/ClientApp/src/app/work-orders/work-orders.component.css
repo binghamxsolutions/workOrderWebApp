@@ -90,6 +90,16 @@ td {background-color: var(--paleBlue);}
   td a {color: blue;}
 
 
+
+/* in\valid form styles */
+.ng-dirty.ng-valid:not(form) {
+  border-left: 7px green solid;
+}
+
+.ng-dirty.ng-invalid:not(form) {
+    border-left: 7px red solid;
+}
+
 /* MOBILE STYLES*/
 @media screen and (max-width: 480px) {
     .action-buttons {font-size: 16px;}
