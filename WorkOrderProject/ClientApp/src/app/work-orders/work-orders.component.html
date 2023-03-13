@@ -16,10 +16,9 @@
         <div class="user-interactive">
           <button class="action-buttons" id="add-new" type="button" onclick="openOrderForm()">Add New</button>
           <div id="modal">
-            <!-- try onfocus set [contactName].addAttribute("autofocus") and onblur set [contactName].removeAttribute("autofocus") -->
             <h1>Create a New Work Order</h1>
 
-            <form [formGroup]="newOrderForm" (ngSubmit)="addWorkOrder()">
+            <form [formGroup]="newOrderForm" (ngSubmit)="addWorkOrder(); newOrderForm.reset()">
               <div class="input-field text">
                 <label for="contactName">Name: </label>
                 <input type="text" name="contactName" id="contactName" formControlName="contactName">
@@ -28,18 +27,19 @@
               <div class="input-field text">
                 <label for="email">E-mail: </label>
                 <input type="email" name="email" id="email" formControlName="email" placeholder="jackie_doe@email.com">
+                <div class="error" [hidden]="newOrderForm.controls.email.valid || newOrderForm.controls.email.pristine">Your e-mail is invalid. Please check the format and try again</div>
               </div>
 
               <div class="input-field text">
                 <label for="contactNumber">Phone Number: </label>
                 <input oninput="hyphenate()" type="tel" name="contactNumber" id="contactNumber" formControlName="contactNumber" placeholder="888-888-8888" />
+                <div class="error" [hidden]="newOrderForm.controls.contactNumber.valid || newOrderForm.controls.contactNumber.pristine">Please make sure your number follows the following pattern: <br />xxx-xxx-xxxx</div>
               </div>
 
               <div class="input-field drop-down">
                 <label for="technicians">Technician: </label>
                 <select name="technicians" id="technicians" formControlName="technicianId">
-
-                  <option value="default" disabled selected hidden>None selected</option>
+                  <option value="null" disabled selected hidden>None selected</option>
                   <option *ngFor="let tech of technicians" value="{{tech.technicianId}}">{{tech.technicianName}}</option>
                 </select>
               </div>
@@ -51,7 +51,7 @@
 
               <div id="form-btns">
                 <input class="action-buttons" id="cancel-btn" type="reset" value="Cancel" onclick="closeOrderForm()">
-                <button class="action-buttons" type="submit">Create</button>
+                <button class="action-buttons" id="submit" type="submit" [disabled]="!newOrderForm.valid" onclick="closeOrderForm()">Create</button>
               </div>
             </form>
           </div>

@@ -1,9 +1,8 @@
 import { Inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { WorkOrder } from './work-order';
-import { Result } from './result';
 
 @Injectable({
   providedIn: 'root'
@@ -77,22 +76,18 @@ export class WorkOrderService {
    * Sends a new work order to an API to be added to the workorders database.
    * @param workOrder
    */
-  createWorkOrder(workOrder: WorkOrder): void {
-    var postData = workOrder;
-    var headers = new HttpHeaders();
-    headers.set('Content-Type', 'application/x-www-form-urlencoded');
-    this.http.post<WorkOrder>(this.base + 'workorder/createneworder?newOrder=', postData, { headers: headers });
-  } //post info and headers solution from: https://stackoverflow.com/questions/54091284/asp-net-core-angular-7-http-post-requires-complex-object
-
-  /**
-   * Produces a new work order number 
-   * @returns A work order number
-   */
-  getNewWONum(): Observable<number> {
-    return this.http.get<number>(this.base + 'workorder/setworkordernumber', this.httpOptions).pipe(
-      catchError(this.handleError<number>('getNewWONum'))
+  createWorkOrder(workOrder: WorkOrder): Observable<boolean> {
+    var headers = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json; charset=utf-8',
+        'Access-Control-Allow-Origin': '*'
+      })
+    };
+    var body = JSON.stringify(workOrder);
+    return this.http.post<boolean>(this.base + 'workorder/createneworder', body, headers).pipe(
+      catchError(this.handleError<boolean>('createWorkOrder'))
     );
-  }
+  } // post info and headers solution from: https://stackoverflow.com/questions/54091284/asp-net-core-angular-7-http-post-requires-complex-object
 
   /**
    * Handles errors from back-end requests to allow the app to still

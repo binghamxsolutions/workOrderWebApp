@@ -4,7 +4,7 @@ import { WorkOrder } from '../work-order';
 import { Router } from '@angular/router';
 import { TechnicianService } from '../technician.service';
 import { Technician } from '../technician';
-import { FormsModule, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-work-orders',
@@ -13,6 +13,7 @@ import { FormsModule, FormBuilder, ReactiveFormsModule, Validators } from '@angu
 })
 export class WorkOrdersComponent implements OnInit {
   statuses?: string[];
+  woNum?: number;
   workOrders?: WorkOrder[];
   technicians?: Technician[];
   numberRegex = "[0-9]{3}-[0-9]{3}-[0-9]{4}";
@@ -20,21 +21,21 @@ export class WorkOrdersComponent implements OnInit {
   //email regex for Angular found on: https://www.abstractapi.com/guides/angular-email-validation
 
   newOrderForm = this.formBuilder.group({
-    woNum: <number|null>(null),
+    woNum: 0, // sets a default value for the required woNum field
     contactName: <string|null>(null),
-    email: [<string|null>(null), Validators.pattern(this.emailRegex)],
     contactNumber: [<string|null>(null), Validators.pattern(this.numberRegex)],
-    dateReceived: <Date|null>(null),
-    technicianId: <number|null>(null),
-    dateAssigned: <Date|null>(null),
+    email: [<string|null>(null), Validators.pattern(this.emailRegex)],
+    dateReceived: <Date|null|string>(null),
     problem: <string|null>(null),
+    dateAssigned: <Date|null|string>(null),
+    technicianId: <number|null>(null),
     status: <string|null>(null),
-    dateComplete: <Date|null>(null),
-    techComments: <string|null>(null)
+    techComments: <string|null>(null),
+    dateComplete: <Date|null|string>(null)
   });
   //creates a form with similar values as the WorkOrder interface for easy mapping
 
-  constructor(private workOrderService: WorkOrderService, private technicianService: TechnicianService, private router: Router, private formBuilder: FormBuilder, private rfm: ReactiveFormsModule) { }
+  constructor(private workOrderService: WorkOrderService, private technicianService: TechnicianService, private router: Router, private formBuilder: FormBuilder) { }
 
   /**
    * Calls the getWorkOrders, getTechnicians, and getStatusList
@@ -126,31 +127,32 @@ export class WorkOrdersComponent implements OnInit {
    * This method updates the workorder table by adding a new record
    */
   addWorkOrder() {
-    // TODO  get new workorder number thru wo-service
-    var current_time = new Date(); // captures current time
-
+    var current_time = new Date().toISOString(); // captures current time
+    
     this.newOrderForm.controls.dateReceived.setValue(current_time);
     this.newOrderForm.controls.status.setValue("Assigned");
     //sets expected values for the work order's status and date received values 
 
-    if ((this.newOrderForm.controls.technicianId.value !== null)) {
-      this.newOrderForm.controls.dateAssigned.setValue(current_time);
-    }  //sets the assigned date if and only a technicina has been set
+    if (this.newOrderForm.controls.technicianId.value !== null) {
+      this.newOrderForm.controls.dateAssigned.setValue(current_time); // assigns the date
 
-    this.getNewWONum();
-    // helps set the new wo number since scoping issues will not allow property assignment
-  }
+      const id = parseInt(this.newOrderForm.controls.technicianId.value.toLocaleString());
+      this.newOrderForm.controls.technicianId.setValue(id);
+      //prevents the tech id from being passed as a string to the 
+    } else {
+      this.newOrderForm.controls.technicianId.setValue(null);
+    }// sets the assigned date value IF AND ONLY IF the tech's id isn't a null or empty string value
 
-  /**
-   * Produces a new work order number to assign to a newly created
-   * work order and then submits it
-   */
-  getNewWONum() {
-    this.workOrderService.getNewWONum().subscribe( woNum =>
-    {
-      this.newOrderForm.controls.woNum.setValue(woNum);
-      this.workOrderService.createWorkOrder(this.newOrderForm.value as WorkOrder);
-      //solution for interface mapping found on: https://stackoverflow.com/questions/44708240/mapping-formgroup-to-interface-object
-   });
+    
+    this.workOrderService.createWorkOrder(this.newOrderForm.value as WorkOrder).subscribe(isSubmitted => {
+      if (isSubmitted == true) {
+        alert("Your work order has been submitted!");
+        location.reload(); // updates the current view
+      } else {
+        alert("There was an issue submitting your work order. Please try again later.")
+      }
+      // user feedback for the form submission
+    });
+    //solution for interface mapping found on: https://stackoverflow.com/questions/44708240/mapping-formgroup-to-interface-object      
   }
 }

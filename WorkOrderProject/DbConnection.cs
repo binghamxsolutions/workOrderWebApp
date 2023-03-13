@@ -31,15 +31,22 @@ namespace WorkOrderProject
         }
 
         // Create methods
-        public void CreateWorkOrder(WorkOrder workOrder)
+
+        /// <summary>
+        /// Attempts to create a new work order from the passed <c>WorkOrder</c>
+        /// object
+        /// </summary>
+        /// <param name="workOrder"></param>
+        /// <returns>Number of records affected as an <c>int</c></returns>
+        public int CreateWorkOrder(WorkOrder workOrder)
         {
-            string columns = "WONum"; //starting point for column values since wonum is required
-            string values = $"{workOrder.WoNum}"; 
+            string columns = "";
+            string values = ""; 
            
             if (workOrder.ContactName != null)
             {
-                columns += ",ContactName";
-                values += $",'{workOrder.ContactName}'";
+                columns += "ContactName";
+                values += $"'{workOrder.ContactName}'";
 
             }
             if (workOrder.ContactNumber != null)
@@ -81,18 +88,20 @@ namespace WorkOrderProject
             if (workOrder.Status != null)
             {
                 columns += ",Status";
-                values += ",'{workOrder.Status}'";
+                values += $",'{workOrder.Status}'";
             }
            
 
-            sqlStatement = $"INSERT INTO workorders ({columns}) VALUES {values}";
+            sqlStatement = $"INSERT INTO workorders ({columns}) VALUES ({values})";
             cmd = new SqlCommand(sqlStatement, conn);
             dataReader = cmd.ExecuteReader();
-            Console.WriteLine(sqlStatement);
+            int recordsAffected = dataReader.RecordsAffected;
 
             dataReader.Close();
             cmd.Dispose();
             conn.Close();
+
+            return recordsAffected;
         }
 
         public void CreateTechnician(Technician technician)
@@ -123,7 +132,7 @@ namespace WorkOrderProject
 
             while (dataReader.Read())
             {
-                WorkOrder temp = validateWorkOrderColumns(dataReader);
+                WorkOrder temp = ValidateWorkOrderColumns(dataReader);
                 workOrders.Add(temp);
             }
             records = workOrders.ToArray();
@@ -151,7 +160,7 @@ namespace WorkOrderProject
 
             while (dataReader.Read())
             {
-                WorkOrder temp = validateWorkOrderColumns(dataReader);
+                WorkOrder temp = ValidateWorkOrderColumns(dataReader);
                 workOrders.Add(temp);
             }
             records = workOrders.ToArray();
@@ -196,7 +205,7 @@ namespace WorkOrderProject
             dataReader = cmd.ExecuteReader();
 
             while (dataReader.Read()) {
-                WorkOrder temp = validateInfoColumns(dataReader);
+                WorkOrder temp = ValidateInfoColumns(dataReader);
                 workOrders.Add(temp);
             }
             records = workOrders.ToArray();
@@ -219,7 +228,7 @@ namespace WorkOrderProject
             dataReader = cmd.ExecuteReader();
 
             dataReader.Read();
-            record = validateWorkOrderColumns(dataReader);
+            record = ValidateWorkOrderColumns(dataReader);
 
             cmd.Dispose();
             dataReader.Close();
@@ -295,39 +304,33 @@ namespace WorkOrderProject
         // Update method NOTE: this method is empty for future iterations with more CRUD operations
         public void Update(string table, string columnName, string condition) { }
 
-
-        /**
-         * Generates a new work order number based on the highest
-         * value available in the workorders table
-         */
-        public int SetWONum() {
-            int newWONum = 0;
-            string sqlStatement = "SELECT ISNULL(MAX(WONum + 1), 1) FROM workorders";
-            // sets the default work order number to 1 if there are no orders available
+        /// <summary>
+        /// Attempts to deletes a record from the database
+        /// </summary>
+        /// <param name="table">The table the record should be found in</param>
+        /// <param name="columnName">The column name that matches the condition location</param>
+        /// <param name="id">The condition as a unique id for a given record</param>
+        /// <returns>Number of affected records as an <c>int</c></returns>
+        public int  Delete(string table, string columnName, int id)
+        {
+            sqlStatement = $"DELETE FROM {table} WHERE {columnName}={id}";
             cmd = new SqlCommand(sqlStatement, conn);
             dataReader = cmd.ExecuteReader();
-
-            while (dataReader.Read()) { 
-                if (!dataReader.IsDBNull(0))
-                {
-                    newWONum = dataReader.GetInt32(0);
-                }
-            }
+            int recordsAffected = dataReader.RecordsAffected;
 
             conn.Close();
-            cmd.Dispose();
             dataReader.Close();
-
-            return newWONum; 
+            cmd.Dispose(); 
+            
+            return recordsAffected;
         }
-
 
         /**
          * Verifies if the columns of the workOrders table listed in 
          * the <c>dataReader</c> are non-nullable. If they are, the appropriate 
          * field is assigned a value. If not, no value is assigned.
          */
-        private WorkOrder validateWorkOrderColumns(SqlDataReader dataReader)
+        private WorkOrder ValidateWorkOrderColumns(SqlDataReader dataReader)
         {
             WorkOrder temp = new WorkOrder();
             for (int i = 0; i < 11; i++)
@@ -411,7 +414,7 @@ namespace WorkOrderProject
          * Verifies if the id and value columns are non-nullable before
          * assigning their respective fields values.
          */
-        private WorkOrder validateInfoColumns(SqlDataReader dataReader)
+        private WorkOrder ValidateInfoColumns(SqlDataReader dataReader)
         {
             WorkOrder temp = new();
 

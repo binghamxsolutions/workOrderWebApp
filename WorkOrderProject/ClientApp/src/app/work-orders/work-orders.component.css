@@ -58,11 +58,11 @@ h1, th, td {text-align: center;}
 /* alignment hack modified from: https://stackoverflow.com/questions/39627549/how-to-center-modal-to-the-center-of-screen*/
   form {row-gap: 25px;}
   #form-btns {
-      justify-content: right;
-      column-gap: 25px;
-      grid-auto-flow:column;
+    justify-content: right;
+    column-gap: 25px;
+    grid-auto-flow:column;
   }
-  .input-field label{ font-weight: bold; }
+  .input-field label{ font-weight: bold;}
   .input-field > * {width: 100%;}
   #form-btns > * {width: fit-content;}
     #cancel {background-color: var(--paleBlue);}
@@ -83,21 +83,29 @@ td:nth-child(even) {background-color: var(--powderBlue);}
   position: sticky;
   top: 0px;
   box-shadow: 0px 1px 2px var(--lakeBlue);
-background-color: var(--stoneBlue);}
-/*th, td {border: 1px solid #000;}*/
-th {}
+  background-color: var(--stoneBlue);
+}
+th, td {border: 2px solid #eee;}
 td {background-color: var(--paleBlue);}
   td a {color: blue;}
 
 
-
 /* in\valid form styles */
 .ng-dirty.ng-valid:not(form) {
-  border-left: 7px green solid;
+  border-left: 5px green solid;
 }
 
 .ng-dirty.ng-invalid:not(form) {
-    border-left: 7px red solid;
+    border-left: 7px red double;
+}
+.ng-invalid #submit {background-color: #a0a0a0; cursor: initial;}
+.ng-invalid #submit:hover{color: var(--peacockBlue);}
+.error {
+    padding: 5px;
+    background-color: #ffcccc;
+    color: var(--midnight);
+    font-style: italic;
+    word-wrap:anywhere;
 }
 
 /* MOBILE STYLES*/

@@ -95,21 +95,18 @@ namespace WorkOrderProject.Controllers
         /// </summary>
         /// <param name="newOrder">A <c>WorkOrder</c> object with work order specifics</param>
         [HttpPost("CreateNewOrder")] //sets the web app uri for POST methods
-        public OkResult Post(WorkOrder newOrder)
+        public bool Post([FromBody]WorkOrder newOrder)
         {
+            bool isSubmitted = false;
             DbConnection connection = new DbConnection();
-            connection.CreateWorkOrder(newOrder);
+            int recordsAffected = connection.CreateWorkOrder(newOrder);
 
-            return Ok();
-        }
-
-        [HttpGet("SetWorkOrderNumber")]
-        public int SetWorkOrderNumber()
-        {
-            DbConnection connection = new DbConnection();
-            int newWONum = connection.SetWONum();
-
-            return newWONum;
+            if (recordsAffected > 0) {
+                isSubmitted = true;
+            }
+            // checks to ensure the order has been submitted
+            
+            return isSubmitted;
         }
     }
 }
